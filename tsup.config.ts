@@ -2,17 +2,7 @@ import { defineConfig } from "tsup";
 
 export default defineConfig({
   // entry: ["src/index.ts"],
-  entry: [
-    "src/index.ts",
-    "src/components/atoms/Badge/index.ts",
-    "src/components/atoms/Button/index.ts",
-    "src/components/atoms/Input/index.ts",
-    "src/components/atoms/Label/index.ts",
-    "src/components/atoms/Typography/index.ts",
-    "src/components/molecules/ComboBox/index.ts",
-    "src/components/molecules/TextField/index.ts",
-    "src/utils/index.ts",
-  ],
+  entry: ["src/index.ts", "src/components/**/index.ts", "src/utils/index.ts"],
   format: ["esm", "cjs"],
   sourcemap: true,
   clean: true,

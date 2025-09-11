@@ -30,7 +30,7 @@
   "scripts": {
     "build:types": "tsc -p tsconfig.types.json",
     "build:js": "tsup",
-    "build-package": "rm -rf dist && pnpm build:js && pnpm build:types",
+    "build-package": "pnpm build:js && pnpm build:types",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
