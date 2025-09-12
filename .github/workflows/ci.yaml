@@ -44,7 +44,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           name: "Unit Tests"
-          file-coverage-mode: changes
+          file-coverage-mode: all
 
       - name: Generate coverage badges
         if: github.ref == 'refs/heads/main'
