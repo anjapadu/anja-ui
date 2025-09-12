@@ -48,7 +48,7 @@ jobs:
 
       - name: Generate coverage badges
         if: github.ref == 'refs/heads/main'
-        run: pnpm coverage:badges
+        run: pnpm test:coverage
 
       - name: Push coverage artifacts to "coverage" branch
         if: github.ref == 'refs/heads/main'
