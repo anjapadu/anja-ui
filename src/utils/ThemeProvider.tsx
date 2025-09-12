@@ -25,6 +25,7 @@ export function ThemeProvider({
   useEffect(() => {
     const stored = readStoredTheme(storageKey);
     if (stored && stored !== theme) setTheme(stored);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storageKey]);
 
   useEffect(() => {

@@ -24,6 +24,7 @@ export const VariantsMatrix: Story = {
       "destructive",
       "warning",
       "info",
+      "unstyled",
     ] as const;
     const sizes = ["sm", "md", "lg"] as const;
 
@@ -39,17 +40,26 @@ export const VariantsMatrix: Story = {
                   key={`${size}-${variant}`}
                   className="flex items-center gap-3"
                 >
-                  {/* Row label */}
                   <div className="w-28 shrink-0 text-xs opacity-60">
                     {variant}
                   </div>
-
                   {/* Enabled + Disabled side by side */}
                   <div className="flex gap-2">
-                    <Button variant={variant} size={size} {...args}>
+                    <Button
+                      variant={variant}
+                      size={size}
+                      {...args}
+                      onClick={() => console.log("ButtonClicked")}
+                    >
                       CTA Button
                     </Button>
-                    <Button variant={variant} size={size} disabled {...args}>
+                    <Button
+                      variant={variant}
+                      size={size}
+                      disabled
+                      {...args}
+                      onClick={() => console.log("ButtonClicked")}
+                    >
                       Disabled
                     </Button>
                   </div>

@@ -1,4 +1,11 @@
-import React, { forwardRef, type JSX } from "react";
+import React, {
+  forwardRef,
+  type ElementType,
+  type ComponentPropsWithoutRef,
+  type ComponentPropsWithRef,
+  type JSX,
+  type ReactElement,
+} from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 
@@ -30,6 +37,7 @@ const typographyVariants = cva("font-sans", {
 type VariantType = NonNullable<
   VariantProps<typeof typographyVariants>["variant"]
 >;
+
 const defaultElement: Record<VariantType, keyof JSX.IntrinsicElements> = {
   h1: "h1",
   h2: "h2",
@@ -38,22 +46,24 @@ const defaultElement: Record<VariantType, keyof JSX.IntrinsicElements> = {
   caption: "span",
 };
 
-type TypographyOwnProps = VariantProps<typeof typographyVariants> & {
-  as?: React.ElementType;
+type TypographyProps = VariantProps<typeof typographyVariants> & {
   text?: string;
   className?: string;
   children?: React.ReactNode;
 };
-type PolymorphicProps<C extends React.ElementType> = TypographyOwnProps &
-  Omit<React.ComponentPropsWithoutRef<C>, keyof TypographyOwnProps>;
 
-type TypographyComponent = <C extends React.ElementType = "span">(
-  props: PolymorphicProps<C> & { ref?: React.Ref<Element> }
-) => React.ReactElement | null;
+type PolymorphicProps<C extends ElementType> = {
+  as?: C;
+} & TypographyProps &
+  Omit<ComponentPropsWithoutRef<C>, keyof TypographyProps>;
 
-const Typography = forwardRef(function Typography<
-  C extends React.ElementType = "span"
->(
+type PolymorphicRef<C extends ElementType> = ComponentPropsWithRef<C>["ref"];
+
+export type TypographyComponent = <C extends ElementType = "span">(
+  props: PolymorphicProps<C> & { ref?: PolymorphicRef<C> }
+) => ReactElement | null;
+
+function BaseTypography<C extends ElementType = "span">(
   {
     as,
     variant = "body",
@@ -64,9 +74,9 @@ const Typography = forwardRef(function Typography<
     children,
     ...rest
   }: PolymorphicProps<C>,
-  ref: React.Ref<Element>
+  ref: PolymorphicRef<C>
 ) {
-  const Component = (as ?? defaultElement[variant!]) as React.ElementType;
+  const Component = (as ?? defaultElement[variant!]) as ElementType;
   return (
     <Component
       ref={ref}
@@ -79,6 +89,15 @@ const Typography = forwardRef(function Typography<
       {text ?? children}
     </Component>
   );
-}) as TypographyComponent;
+}
+
+/**
+ * Needed to allow typings to be autocompleted when using `as="..."`
+ * */
+const Typography = forwardRef(
+  BaseTypography as unknown as (
+    props: PolymorphicProps<ElementType> & { ref?: PolymorphicRef<ElementType> }
+  ) => ReactElement | null
+) as TypographyComponent;
 
 export default Typography;

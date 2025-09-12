@@ -4,7 +4,9 @@ import { twMerge } from "tailwind-merge";
 import { forwardRef } from "react";
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
-  VariantProps<typeof buttonVariants>;
+  VariantProps<typeof buttonVariants> & {
+    text?: string;
+  };
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center transition-colors text-font-primary relative overflow-hidden \
@@ -12,6 +14,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
+        unstyled: "",
         default:
           "bg-neutral-0 border enabled:active:bg-neutral-100 border-border text-font-primary",
         primary: "bg-primary enabled:active:bg-primary-600 text-neutral-0",
@@ -36,14 +39,14 @@ const buttonVariants = cva(
 export const Button = forwardRef<
   HTMLButtonElement,
   PropsWithChildren<ButtonProps>
->(({ variant, size, children, className, ...props }, ref) => {
+>(({ variant, text, size, children, className, ...props }, ref) => {
   return (
     <button
       ref={ref}
       className={twMerge(buttonVariants({ variant, size }), className)}
       {...props}
     >
-      {children}
+      {text || children}
     </button>
   );
 });
