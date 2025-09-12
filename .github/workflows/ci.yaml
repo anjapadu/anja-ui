@@ -43,12 +43,36 @@ jobs:
         uses: hyperse-io/vitest-coverage-reporter@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          name: 'Unit Tests'
+          name: "Unit Tests"
           file-coverage-mode: changes
 
       - name: Generate coverage badges
         if: github.ref == 'refs/heads/main'
         run: pnpm test:coverage && pnpm generate-coverage-report
+
+      - name: Test (unit) with coverage (Vitest)
+        run: pnpm test:coverage | tee coverage/coverage.txt
+
+      - name: PR Coverage Comment
+        if: github.event_name == 'pull_request'
+        id: cov
+        uses: MishaKav/jest-coverage-comment@v1.0.28
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          coverage-summary-path: ./coverage/coverage-summary.json
+          coverage-path: ./coverage/coverage.txt
+          title: Unit Tests Coverage
+          summary-title: Summary
+          badge-title: Coverage
+          report-only-changed-files: false
+          remove-links-to-lines: true
+          create-new-comment: false
+
+      - name: Add coverage to Job Summary
+        if: always()
+        run: |
+          echo "## 🧪 Coverage" >> "$GITHUB_STEP_SUMMARY"
+          echo '${{ steps.cov.outputs.summaryHtml }}' >> "$GITHUB_STEP_SUMMARY"
 
       - name: Push coverage artifacts to "coverage" branch
         if: github.ref == 'refs/heads/main'
