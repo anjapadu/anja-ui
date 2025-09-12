@@ -43,8 +43,8 @@ jobs:
         uses: hyperse-io/vitest-coverage-reporter@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          name: "Unit Tests"
-          file-coverage-mode: all
+          name: "AnjaUI"
+          file-coverage-mode: changes
 
       - name: Generate coverage badges
         if: github.ref == 'refs/heads/main'
