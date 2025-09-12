@@ -2,7 +2,14 @@ import { defineConfig } from "tsup";
 
 export default defineConfig({
   // entry: ["src/index.ts"],
-  entry: ["src/index.ts", "src/components/**/index.ts", "src/utils/index.ts"],
+  entry: [
+    "src/index.ts",
+    "src/components/**/index.ts",
+    "src/components/**/!(*.stories|*.test).tsx",
+    "src/components/**/!(*.stories|*.test).ts",
+    "src/utils/**/!(*.stories|*.test).ts",
+    "src/utils/**/!(*.stories|*.test).tsx",
+  ],
   format: ["esm", "cjs"],
   sourcemap: true,
   clean: true,
