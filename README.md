@@ -1,7 +1,7 @@
-![Coverage: Statements](https://raw.githubusercontent.com/anjapadu/anja-ui/main/badges/statements.svg)
-![Coverage: Branches](https://raw.githubusercontent.com/anjapadu/anja-ui/main/badges/branches.svg)
-![Coverage: Functions](https://raw.githubusercontent.com/anjapadu/anja-ui/main/badges/functions.svg)
-![Coverage: Lines](https://raw.githubusercontent.com/anjapadu/anja-ui/main/badges/lines.svg)
+![Coverage: Statements](https://raw.githubusercontent.com/anjapadu/anja-ui/coverage/badges/statements.svg)
+![Coverage: Branches](https://raw.githubusercontent.com/anjapadu/anja-ui/coverage/badges/branches.svg)
+![Coverage: Functions](https://raw.githubusercontent.com/anjapadu/anja-ui/coverage/badges/functions.svg)
+![Coverage: Lines](https://raw.githubusercontent.com/anjapadu/anja-ui/coverage/badges/lines.svg)
 
 # 🌟 anja-ui
 
