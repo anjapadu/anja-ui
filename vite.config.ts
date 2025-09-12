@@ -17,7 +17,8 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   test: {
     coverage: {
-      reporter: ["text", "lcov"],
+      reporter: ["text", "lcov", "json-summary", "json"],
+      reportOnFailure: true,
       all: true,
       include: ["src/components/**/*.{ts,tsx}", "src/utils/**/*.{ts,tsx}"],
       exclude: [

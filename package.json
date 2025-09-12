@@ -33,6 +33,9 @@
     }
   },
   "scripts": {
+    "test:coverage": "pnpm vitest run --project unit --coverage",
+    "test:coverage:interactions": "pnpm vitest run --coverage",
+    "generate-coverage-report": "generate-coverage-report -p ./coverage/badges",
     "build:types": "tsc -p tsconfig.types.json",
     "build:js": "tsup",
     "build-package": "pnpm build:js && pnpm build:types",
@@ -45,6 +48,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.2.7",
+    "@hyperse/vitest-coverage-reporter": "^1.0.16",
     "class-variance-authority": "^0.7.1",
     "tailwind-merge": "^3.3.1"
   },

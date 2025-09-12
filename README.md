@@ -1,74 +1,41 @@
-# React + TypeScript + Vite
+![Coverage: Statements](https://raw.githubusercontent.com/anjapadu/anja-ui/main/badges/statements.svg)
+![Coverage: Branches](https://raw.githubusercontent.com/anjapadu/anja-ui/main/badges/branches.svg)
+![Coverage: Functions](https://raw.githubusercontent.com/anjapadu/anja-ui/main/badges/functions.svg)
+![Coverage: Lines](https://raw.githubusercontent.com/anjapadu/anja-ui/main/badges/lines.svg)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 🌟 anja-ui
 
-Currently, two official plugins are available:
+**anja-ui** is a modern, type-safe React component library and design system.  
+It’s built with [React 19](https://react.dev/), [Tailwind CSS v4](https://tailwindcss.com/), and [class-variance-authority](https://cva.style/).  
+Every component is accessible by default and comes with variants powered by **CVA** for consistent styling.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+## ✨ Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- ⚛️ **React 19 + TypeScript** – strongly typed props and polymorphic components.
+- 🎨 **Tailwind 4 + CSS variables** – theming built on design tokens.
+- ⚡ **Vite + Storybook 9** – instant playground with live docs.
+- 🧩 **Headless UI (optional)** – accessible primitives integrated where it makes sense.
+- 🛠️ **Tree-shakable** – import only what you need.
+- 📦 **ESM + CJS** – works in all bundlers.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## Pre-requisites
+- Tailwind 4 
+- React / React Dom >= 19
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+
+## 📦 Installation
+
+```bash
+# with pnpm
+pnpm add anja-ui
+
+# with npm
+npm install anja-ui
+
+# with yarn
+yarn add anja-ui
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-# -anja-ui
-# -anja-ui
-# -anja-ui
-# -anja-ui
-# -anja-ui

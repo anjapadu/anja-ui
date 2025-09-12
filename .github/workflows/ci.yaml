@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,21 +29,39 @@ jobs:
           node-version: 22
           cache: "pnpm"
 
-      - name: Install
+      - name: 📥 Install Dependencies
         run: pnpm install --frozen-lockfile
 
       - name: Lint
         run: pnpm lint
 
-      - name: Test
-        run: pnpm vitest run --project unit --coverage
+      - name: Test (unit) with coverage
+        run: pnpm test:coverage
 
-      - name: Build library
-        run: pnpm build-package
+      - name: PR Vitest Coverage Summary
+        if: github.event_name == 'pull_request'
+        uses: hyperse-io/vitest-coverage-reporter@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          name: 'Unit Tests'
+          file-coverage-mode: changes
 
-      # - name: Build Storybook (optional)
-      #   run: pnpm build:storybook
+      - name: Generate coverage badges
+        if: github.ref == 'refs/heads/main'
+        run: pnpm coverage:badges
 
+      - name: Push coverage artifacts to "coverage" branch
+        if: github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./coverage
+          publish_branch: coverage
+          allow_empty_commit: true
+
+      # Optional Storybook build/upload (disabled by default)
+      # - name: Build Storybook
+      #   run: pnpm build-storybook
       # - name: Upload Storybook artifact
       #   if: always()
       #   uses: actions/upload-artifact@v4
