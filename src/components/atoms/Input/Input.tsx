@@ -15,9 +15,9 @@ const inputVariants = cva(
         success: "outline-success border-success",
       },
       inputSize: {
-        sm: "h-10 text-sm rounded-sm",
-        md: "h-12 text-md rounded-md",
-        lg: "h-14 text-lg rounded-lg",
+        sm: "h-field-sm text-sm field-radius",
+        md: "h-field-md text-md field-radius",
+        lg: "h-field-lg text-lg field-radius",
       },
     },
     defaultVariants: {

@@ -10,15 +10,16 @@ import {
   useMemo,
   useState,
   type ComponentPropsWithoutRef,
-  type Key,
+  type ReactNode,
 } from "react";
 import Typography from "../../atoms/Typography/Typography";
 import { Label } from "../../atoms/Label/Label";
+import { escapeRegExp } from "../../../utils/escapeRegex";
 
 const fieldWrapperVariants = cva("", {
   variants: {
     variant: { floating: "relative", placeholder: "" },
-    size: { sm: "", md: "", lg: "" },
+    size: { sm: null, md: null, lg: null },
   },
   defaultVariants: { variant: "floating", size: "sm" },
 });
@@ -86,9 +87,9 @@ const comboboxInputVariants = cva(
         placeholder: "",
       },
       size: {
-        sm: "h-10 text-sm rounded-sm",
-        md: "h-12 text-md rounded-md",
-        lg: "h-14 text-lg rounded-lg",
+        sm: "h-field-sm text-sm field-radius",
+        md: "h-field-md text-md field-radius",
+        lg: "h-field-lg text-lg field-radius",
       },
     },
     compoundVariants: [
@@ -133,17 +134,27 @@ const optionItemVariants = cva(
 
 type FieldCva = VariantProps<typeof fieldWrapperVariants>;
 
-export type ComboboxFieldProps<T> = {
+export type Option = {
+  label: string;
+  value: string;
+  image?: string;
+  leftItem?: ReactNode;
+  rightItem?: ReactNode;
+  [k: string]: string | undefined | ReactNode;
+};
+
+export type ComboboxFieldProps = {
   id: string;
   label?: string;
-
-  items: T[];
-  value?: T;
-  onChange: (value: NoInfer<T> | null) => void;
-  getLabel: (item: T) => string;
-  getKey?: (item: T, index: number) => Key;
-  filter?: (items: T[], query: string) => T[];
-
+  items: Option[];
+  value?: Option;
+  renderOption?: (
+    option: Option,
+    state: { focus: boolean; selected: boolean; disabled: boolean }
+  ) => React.ReactNode;
+  onChange: (value: Option | null) => void;
+  customFilter?: (items: Option[], query: string) => Option[];
+  getLabel?: (option: Option) => string | React.ReactElement;
   placeholder?: string;
   error?: string;
   hint?: string;
@@ -158,7 +169,7 @@ export type ComboboxFieldProps<T> = {
   virtualThreshold?: number;
 } & Pick<FieldCva, "variant" | "size">;
 
-export function ComboboxField<T>({
+export function ComboboxField({
   id,
   label,
   variant = "floating",
@@ -166,31 +177,30 @@ export function ComboboxField<T>({
   items,
   value,
   onChange,
-  getLabel,
-  getKey,
-  filter,
+  customFilter,
   placeholder = "Search or select…",
   error,
   hint,
+  renderOption,
+  getLabel = (option: Option) => option.label,
   openOnFocus = true,
   className,
   inputProps,
   virtualized = false,
   virtualThreshold,
-}: ComboboxFieldProps<T>) {
+}: ComboboxFieldProps) {
   const [query, setQuery] = useState("");
 
   const filtered = useMemo(() => {
     if (!query) return items;
-    if (filter) return filter(items, query);
-    const q = query.toLowerCase();
-    return items.filter((it) => getLabel(it).toLowerCase().includes(q));
-  }, [items, query, filter, getLabel]);
+    if (customFilter) return customFilter(items, query);
+    const re = new RegExp(escapeRegExp(query), "i");
+    return items.filter((item) => re.test(item.label));
+  }, [items, query, customFilter]);
 
   const isFloating = variant === "floating";
 
-  const displayValue = ((item: T | undefined) =>
-    item ? getLabel(item) : "") as unknown as (item: T) => string;
+  const displayValue = (item: Option | undefined) => (item ? item.label : "");
 
   const useVirtual =
     virtualized && (virtualThreshold ? items.length > virtualThreshold : true);
@@ -200,12 +210,12 @@ export function ComboboxField<T>({
     <div
       className={twMerge(fieldWrapperVariants({ variant, size }), className)}
     >
-      <Combobox<T>
+      <Combobox<Option>
         value={value}
         onChange={onChange}
         immediate={openOnFocus}
         onClose={() => setQuery("")}
-        by={(a, b) => a === b}
+        by={(a, b) => a?.value === b?.value}
         virtual={virtualProp}
       >
         <ComboboxInput
@@ -243,31 +253,35 @@ export function ComboboxField<T>({
           {useVirtual ? (
             ({ option }) => (
               <ComboboxOption
-                key={
-                  getKey
-                    ? getKey(option, -1)
-                    : (getLabel(option) as unknown as Key)
-                }
+                key={option.value}
                 value={option}
                 className={optionItemVariants({ size })}
               >
-                {getLabel(option)}
+                {({ focus, selected, disabled }) => (
+                  <>
+                    {renderOption
+                      ? renderOption(option, { focus, selected, disabled })
+                      : getLabel(option)}
+                  </>
+                )}
               </ComboboxOption>
             )
           ) : filtered.length === 0 ? (
             <div className="px-2 py-2 text-font-secondary">No matches</div>
           ) : (
-            filtered.map((option, idx) => (
+            filtered.map((option) => (
               <ComboboxOption
-                key={
-                  getKey
-                    ? getKey(option, idx)
-                    : (getLabel(option) as unknown as Key)
-                }
+                key={option.value}
                 value={option}
                 className={optionItemVariants({ size })}
               >
-                {getLabel(option)}
+                {({ focus, selected, disabled }) => (
+                  <>
+                    {renderOption
+                      ? renderOption(option, { focus, selected, disabled })
+                      : getLabel(option)}
+                  </>
+                )}
               </ComboboxOption>
             ))
           )}

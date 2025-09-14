@@ -2,11 +2,11 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useMemo, useState } from "react";
 import { ComboboxField, type ComboboxFieldProps } from "./ComboBox";
 
-type Person = { id: number; name: string };
+type Person = { value: string; label: string };
 
 function ComboboxPerson(
   props: Omit<
-    ComboboxFieldProps<Person>,
+    ComboboxFieldProps,
     "items" | "value" | "onChange" | "getLabel"
   > & {
     items?: Person[];
@@ -17,22 +17,22 @@ function ComboboxPerson(
   const items = useMemo<Person[]>(
     () =>
       props.items ?? [
-        { id: 1, name: "Durward Reynolds" },
-        { id: 2, name: "Kenton Towne" },
-        { id: 3, name: "Therese Wunsch" },
-        { id: 4, name: "Benedict Kessler" },
-        { id: 5, name: "Katelyn Rohan" },
-        { id: 6, name: "Gustavo Yance" },
+        { value: "1", label: "Durward Reynolds" },
+        { value: "2", label: "Kenton Towne" },
+        { value: "3", label: "Therese Wunsch" },
+        { value: "4", label: "Benedict Kessler" },
+        { value: "5", label: "Katelyn Rohan" },
+        { value: "6", label: "Gustavo Yance" },
       ],
     [props.items]
   );
 
   return (
     <div style={{ width: 300 }}>
-      <ComboboxField<Person>
+      <ComboboxField
         items={items}
         value={value || undefined}
-        getLabel={(p) => p.name}
+        getLabel={(p) => p.label}
         variant="floating"
         {...props}
         id="assignee"

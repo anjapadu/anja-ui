@@ -18,7 +18,7 @@ describe("<Input /> (unit/jsdom)", () => {
   it("applies default variants (variant=default, inputSize=sm)", () => {
     render(<Input />);
     const el = screen.getByRole("textbox");
-    expect(el).toHaveClass("h-10");
+    expect(el).toHaveClass("h-field-sm");
     expect(el).toHaveClass("text-sm");
     expect(el).toHaveClass("outline-neutral-300");
     expect(el).toHaveClass("border");
@@ -27,7 +27,7 @@ describe("<Input /> (unit/jsdom)", () => {
   it("applies size + variant classes", () => {
     render(<Input inputSize="md" variant="error" />);
     const el = screen.getByRole("textbox");
-    expect(el).toHaveClass("h-12", "text-md", "rounded-md");
+    expect(el).toHaveClass("h-field-md", "text-md", "field-radius");
     expect(el).toHaveClass("outline-danger", "border-danger");
   });
 
