@@ -101,7 +101,34 @@
 
 }
 
+:root {
+  /* base form field values  start*/
+  --field-sm: --spacing(10);
+  --field-md: --spacing(12);
+  --field-lg: --spacing(14);
+  --field-radius: --spacing(1);
+  /* base form field values end */
+}
+
+@utility h-field-sm {
+  height: var(--field-sm);
+}
+
+@utility h-field-md {
+  height: var(--field-md);
+}
+
+@utility h-field-lg {
+  height: var(--field-lg);
+}
+
+@utility field-radius {
+  border-radius: var(--field-radius);
+}
+
+
 .dark {
+
   color-scheme: dark;
   --color-neutral-900: oklch(1 0 0);
   --color-neutral-800: oklch(0.9846 0.0017 247.84);

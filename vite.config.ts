@@ -16,6 +16,7 @@ const dirname =
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   test: {
+    name: "AnjaUI",
     coverage: {
       reporter: ["text", "lcov", "json-summary", "json"],
       reportOnFailure: true,
