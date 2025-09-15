@@ -59,7 +59,7 @@ export function CheckBox({
     >
       {hoverBackground && <div className={focusCircleVariants({ size })} />}
       <svg
-        className="stroke-white opacity-0 group-hover:opacity-100 group-data-checked:opacity-100"
+        className="stroke-white opacity-0 group-hover:opacity-100  dark:group-hover:opacity-50 group-data-checked:opacity-100"
         viewBox="0 0 14 14"
         fill="none"
       >
