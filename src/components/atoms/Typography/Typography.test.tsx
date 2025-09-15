@@ -85,7 +85,7 @@ describe("<Typography />", () => {
         ref target
       </Typography>
     );
-    expect(ref.current).toBeInstanceOf(HTMLElement);
+    expect(ref.current).toBeInstanceOf(HTMLHeadingElement);
     expect(ref.current?.tagName).toBe("H1");
     expect(ref.current?.textContent).toBe("ref target");
   });

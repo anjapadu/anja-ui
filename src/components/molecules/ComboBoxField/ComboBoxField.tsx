@@ -16,7 +16,7 @@ import Typography from "../../atoms/Typography/Typography";
 import { Label } from "../../atoms/Label/Label";
 import { escapeRegExp } from "../../../utils/escapeRegex";
 
-const fieldWrapperVariants = cva("", {
+const fieldWrapperVariants = cva(null, {
   variants: {
     variant: { floating: "relative", placeholder: "" },
     size: { sm: null, md: null, lg: null },
@@ -24,23 +24,23 @@ const fieldWrapperVariants = cva("", {
   defaultVariants: { variant: "floating", size: "sm" },
 });
 
-const labelVariants = cva("", {
+const labelVariants = cva(null, {
   variants: {
     variant: {
       floating:
-        "pointer-events-none absolute transition-all text-font-secondary \
+        "left-2 \
+        pointer-events-none absolute transition-all text-font-secondary \
         left-[0.55rem] top-1/2 -translate-y-1/2 \
         peer-focus:top-1 peer-[&:not(:placeholder-shown)]:top-1",
       placeholder: "",
     },
-    size: { sm: "", md: "", lg: "" },
+    size: { sm: null, md: null, lg: null },
   },
   compoundVariants: [
     {
       variant: "floating",
       size: "sm",
       class: `
-        left-2
         peer-placeholder-shown:text-sm
         peer-focus:text-[0.625rem]
         peer-[&:not(:placeholder-shown)]:text-[0.625rem]
@@ -52,7 +52,6 @@ const labelVariants = cva("", {
       variant: "floating",
       size: "md",
       class: `
-        left-2
         peer-placeholder-shown:text-base
         peer-focus:text-xs
         peer-[&:not(:placeholder-shown)]:text-xs
@@ -64,7 +63,6 @@ const labelVariants = cva("", {
       variant: "floating",
       size: "lg",
       class: `
-        left-2
         peer-placeholder-shown:text-lg
         peer-focus:text-sm
         peer-[&:not(:placeholder-shown)]:text-sm
@@ -84,7 +82,7 @@ const comboboxInputVariants = cva(
     variants: {
       variant: {
         floating: "peer",
-        placeholder: "",
+        placeholder: null,
       },
       size: {
         sm: "h-field-sm text-sm field-radius",
@@ -136,7 +134,7 @@ type FieldCva = VariantProps<typeof fieldWrapperVariants>;
 
 export type Option = {
   label: string;
-  value: string;
+  value: string | number;
   image?: string;
   leftItem?: ReactNode;
   rightItem?: ReactNode;
@@ -147,7 +145,7 @@ export type ComboboxFieldProps = {
   id: string;
   label?: string;
   items: Option[];
-  value?: Option;
+  value: Option | null;
   renderOption?: (
     option: Option,
     state: { focus: boolean; selected: boolean; disabled: boolean }
@@ -200,18 +198,17 @@ export function ComboboxField({
 
   const isFloating = variant === "floating";
 
-  const displayValue = (item: Option | undefined) => (item ? item.label : "");
+  const displayValue = (item: Option | null) => (item ? item.label : "");
 
   const useVirtual =
     virtualized && (virtualThreshold ? items.length > virtualThreshold : true);
   const virtualProp = useVirtual ? { options: filtered } : undefined;
-
   return (
     <div
       className={twMerge(fieldWrapperVariants({ variant, size }), className)}
     >
-      <Combobox<Option>
-        value={value}
+      <Combobox<Option | null>
+        value={value ?? null}
         onChange={onChange}
         immediate={openOnFocus}
         onClose={() => setQuery("")}
@@ -251,21 +248,23 @@ export function ComboboxField({
           className={optionsPanelVariants({ size })}
         >
           {useVirtual ? (
-            ({ option }) => (
-              <ComboboxOption
-                key={option.value}
-                value={option}
-                className={optionItemVariants({ size })}
-              >
-                {({ focus, selected, disabled }) => (
-                  <>
-                    {renderOption
-                      ? renderOption(option, { focus, selected, disabled })
-                      : getLabel(option)}
-                  </>
-                )}
-              </ComboboxOption>
-            )
+            ({ option }) => {
+              return (
+                <ComboboxOption
+                  key={option.value}
+                  value={option}
+                  className={optionItemVariants({ size })}
+                >
+                  {({ focus, selected, disabled }) => (
+                    <>
+                      {renderOption
+                        ? renderOption(option, { focus, selected, disabled })
+                        : getLabel(option)}
+                    </>
+                  )}
+                </ComboboxOption>
+              );
+            }
           ) : filtered.length === 0 ? (
             <div className="px-2 py-2 text-font-secondary">No matches</div>
           ) : (
