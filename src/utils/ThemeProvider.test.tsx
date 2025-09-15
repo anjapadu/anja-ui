@@ -83,7 +83,9 @@ function Consumer() {
       <button onClick={() => setTheme("light")}>to-light</button>
       <button onClick={() => setTheme("system")}>to-system</button>
       <button onClick={toggle}>toggle</button>
-      <button onClick={() => (setTheme as (t: unknown) => void)("nope")}>
+      <button
+        onClick={() => (setTheme as (t: unknown) => void)("invalid-theme")}
+      >
         to-invalid
       </button>
     </div>
@@ -205,7 +207,7 @@ describe("ThemeProvider (integration)", () => {
     const setItemSpy = vi
       .spyOn(Storage.prototype, "setItem")
       .mockImplementation(() => {
-        throw new Error("nope");
+        throw new Error("invalid-theme");
       });
     const removeSpy = vi.spyOn(Storage.prototype, "removeItem");
     const errSpy = vi.spyOn(console, "error").mockImplementation(() => {});
