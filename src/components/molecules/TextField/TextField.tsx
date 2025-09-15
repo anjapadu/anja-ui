@@ -19,27 +19,27 @@ const textFieldVariants = cva("", {
       placeholder: "",
     },
     size: {
-      sm: "",
-      md: "",
-      lg: "",
+      sm: null,
+      md: null,
+      lg: null,
     },
   },
   defaultVariants: {
     size: "sm",
-    variant: "placeholder",
+    variant: "floating",
   },
 });
 
-const inputVariants = cva("", {
+const inputVariants = cva(null, {
   variants: {
     variant: {
       floating: "peer",
       placeholder: "",
     },
     size: {
-      sm: "",
-      md: "",
-      lg: "",
+      sm: null,
+      md: null,
+      lg: null,
     },
   },
   compoundVariants: [
@@ -59,27 +59,31 @@ const inputVariants = cva("", {
       class: "pt-5",
     },
   ],
+  defaultVariants: {
+    variant: "floating",
+    size: "sm",
+  },
 });
 
 const labelVariants = cva("", {
   variants: {
     variant: {
       floating:
-        "pointer-events-none absolute transition-all text-font-secondary \
+        "left-2 \
+        pointer-events-none absolute transition-all text-font-secondary \
         left-[0.55rem] top-1/2 -translate-y-1/2 \
         peer-focus:top-1 \
         peer-[&:not(:placeholder-shown)]:top-1",
       horizontal: "",
       placeholder: "",
     },
-    size: { sm: "", md: "", lg: "" },
+    size: { sm: null, md: null, lg: null },
   },
   compoundVariants: [
     {
       variant: "floating",
       size: "sm",
       class: `
-        left-2
         peer-placeholder-shown:text-sm
         peer-focus:text-[0.625rem]
         peer-[&:not(:placeholder-shown)]:text-[0.625rem]
@@ -91,7 +95,6 @@ const labelVariants = cva("", {
       variant: "floating",
       size: "md",
       class: `
-        left-2
         peer-placeholder-shown:text-base
         peer-focus:text-xs
         peer-[&:not(:placeholder-shown)]:text-xs
@@ -103,7 +106,6 @@ const labelVariants = cva("", {
       variant: "floating",
       size: "lg",
       class: `
-        left-2
         peer-placeholder-shown:text-lg
         peer-focus:text-sm
         peer-[&:not(:placeholder-shown)]:text-sm

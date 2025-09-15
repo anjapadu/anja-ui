@@ -32,6 +32,7 @@ export default defineConfig({
         "dist/**",
         "**/*.config.{ts,js,mjs,cjs}",
         ".storybook/**",
+        "src/utils/ThemeScript.tsx"
       ],
     },
     projects: [

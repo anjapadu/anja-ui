@@ -1,4 +1,4 @@
-import { DEFAULT_STORAGE_KEY, SYSTEM_QUERY, type Theme } from "./theme-core";
+import { DEFAULT_STORAGE_KEY, SYSTEM_QUERY, type Theme } from "./themeHelpers";
 
 export function ThemeScript({
   storageKey = DEFAULT_STORAGE_KEY,

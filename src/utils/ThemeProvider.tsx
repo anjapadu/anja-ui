@@ -8,7 +8,7 @@ import {
   applyMode,
   isTheme,
   type Theme,
-} from "./theme-core";
+} from "./themeHelpers";
 
 export function ThemeProvider({
   children,
@@ -25,7 +25,7 @@ export function ThemeProvider({
   useEffect(() => {
     const stored = readStoredTheme(storageKey);
     if (stored && stored !== theme) setTheme(stored);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storageKey]);
 
   useEffect(() => {

@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useMemo, useState } from "react";
-import { ComboboxField, type ComboboxFieldProps } from "./ComboBox";
+import { ComboboxField, type ComboboxFieldProps } from "./ComboBoxField";
 
-type Person = { value: string; label: string };
+type Person = { value: string | number; label: string };
 
 function ComboboxPerson(
   props: Omit<
@@ -31,7 +31,7 @@ function ComboboxPerson(
     <div style={{ width: 300 }}>
       <ComboboxField
         items={items}
-        value={value || undefined}
+        value={value || null}
         getLabel={(p) => p.label}
         variant="floating"
         {...props}
