@@ -69,8 +69,7 @@ const labelVariants = cva("", {
   variants: {
     variant: {
       floating:
-        "left-2 \
-        pointer-events-none absolute transition-all text-font-secondary \
+        "pointer-events-none absolute transition-all text-font-secondary \
         left-[0.55rem] top-1/2 -translate-y-1/2 \
         peer-focus:top-1 \
         peer-[&:not(:placeholder-shown)]:top-1",
