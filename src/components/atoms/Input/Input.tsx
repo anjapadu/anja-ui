@@ -17,7 +17,7 @@ const inputVariants = cva(
       inputSize: {
         sm: "h-field-sm text-sm field-radius",
         md: "h-field-md text-md field-radius",
-        lg: "h-field-lg text-lg field-radius",
+        lg: "h-field-lg text-xl field-radius",
       },
     },
     defaultVariants: {
