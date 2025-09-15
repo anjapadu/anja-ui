@@ -2,13 +2,13 @@ import { Checkbox as HCheckbox, type CheckboxProps } from "@headlessui/react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const checkboxVariants = cva(
-  "group block rounded border-2 box-border border-primary-700 bg-white hover:bg-primary-200 data-checked:bg-primary cursor-pointer size-[var(--cb-size)] ",
+  "group block rounded border-2 box-border border-primary-700 bg-transparent data-checked:bg-primary cursor-pointer size-[var(--cb-size)] ",
   {
     variants: {
       size: {
-        sm: "[--cb-size:--spacing(5)]",
-        md: "[--cb-size:--spacing(6)]",
-        lg: "[--cb-size:--spacing(8)]",
+        sm: "[--cb-size:var(--chekbox-sm)]",
+        md: "[--cb-size:var(--chekbox-md)]",
+        lg: "[--cb-size:var(--chekbox-lg)]",
       },
     },
     defaultVariants: {
@@ -20,14 +20,14 @@ const checkboxVariants = cva(
 const focusCircleVariants = cva(
   "size-0 pointer-events-none absolute top-1/2 left-1/2 \
   -translate-x-1/2 -translate-y-1/2 transform-gpu \
-  rounded-full group-hover:size-[var(--circle-cb-size)] bg-primary-100 -z-10 \
+  rounded-full group-hover:size-[var(--circle-cb-size)] bg-primary-100 -z-10 dark:opacity-10 \
   transition-all duration-200",
   {
     variants: {
       size: {
-        sm: "[--circle-cb-size:--spacing(11)] ",
-        md: "[--circle-cb-size:--spacing(13)] ",
-        lg: "[--circle-cb-size:--spacing(18)] ",
+        sm: "[--circle-cb-size:var(--chekbox-bg-sm)]",
+        md: "[--circle-cb-size:var(--chekbox-bg-md)]",
+        lg: "[--circle-cb-size:var(--chekbox-bg-lg)]",
       },
     },
     defaultVariants: {
