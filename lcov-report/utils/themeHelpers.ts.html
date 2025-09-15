@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for utils/theme-core.ts</title>
+    <title>Code coverage report for utils/themeHelpers.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">utils</a> theme-core.ts</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">utils</a> themeHelpers.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/24</span>
+                <span class='fraction'>24/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>11/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/24</span>
+                <span class='fraction'>24/24</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -93,63 +93,63 @@
 <a name='L28'></a><a href='#L28'>28</a>
 <a name='L29'></a><a href='#L29'>29</a>
 <a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export type Theme = "light" | "dark" | "system";
-<span class="cstat-no" title="statement not covered" >export const DEFAULT_STORAGE_KEY = "anja-ui-theme";</span>
-<span class="cstat-no" title="statement not covered" >export const SYSTEM_QUERY = "(prefers-color-scheme: dark)";</span>
+export const DEFAULT_STORAGE_KEY = "anja-ui-theme";
+export const SYSTEM_QUERY = "(prefers-color-scheme: dark)";
 &nbsp;
-<span class="cstat-no" title="statement not covered" >export const isTheme = (x: unknown): x is Theme =&gt;</span>
-<span class="cstat-no" title="statement not covered" >  x === "light" || x === "dark" || x === "system";</span>
+export const isTheme = (x: unknown): x is Theme =&gt;
+  x === "light" || x === "dark" || x === "system";
 &nbsp;
-<span class="cstat-no" title="statement not covered" >export const readStoredTheme = (key: string): Theme | null =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >  try {</span>
-<span class="cstat-no" title="statement not covered" >    const raw = localStorage.getItem(key);</span>
-<span class="cstat-no" title="statement not covered" >    return isTheme(raw) ? raw : null;</span>
-<span class="cstat-no" title="statement not covered" >  } catch {</span>
-<span class="cstat-no" title="statement not covered" >    return null;</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
-<span class="cstat-no" title="statement not covered" >};</span>
+export const readStoredTheme = (key: string): Theme | null =&gt; {
+  try {
+    const raw = localStorage.getItem(key);
+    return isTheme(raw) ? raw : null;
+  } catch {
+    return null;
+  }
+};
 &nbsp;
-<span class="cstat-no" title="statement not covered" >export const getSystemDark = (): boolean =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >  try {</span>
-<span class="cstat-no" title="statement not covered" >    return !!window.matchMedia &amp;&amp; window.matchMedia(SYSTEM_QUERY).matches;</span>
-<span class="cstat-no" title="statement not covered" >  } catch {</span>
-<span class="cstat-no" title="statement not covered" >    return false;</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
-<span class="cstat-no" title="statement not covered" >};</span>
+export const getSystemDark = (): boolean =&gt; {
+  try {
+    return !!window.matchMedia &amp;&amp; window.matchMedia(SYSTEM_QUERY).matches;
+  } catch {
+    return false;
+  }
+};
 &nbsp;
-<span class="cstat-no" title="statement not covered" >export const applyMode = (mode: "light" | "dark") =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >  const root = document.documentElement;</span>
-<span class="cstat-no" title="statement not covered" >  root.classList.toggle("dark", mode === "dark");</span>
-<span class="cstat-no" title="statement not covered" >  root.style.colorScheme = mode;</span>
-<span class="cstat-no" title="statement not covered" >};</span>
+export const applyMode = (mode: "light" | "dark") =&gt; {
+  const root = document.documentElement;
+  root.classList.toggle("dark", mode === "dark");
+  root.style.colorScheme = mode;
+};
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -157,7 +157,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-09-14T06:56:57.809Z
+                at 2025-09-15T00:32:22.027Z
             </div>
         <script src="../prettify.js"></script>
         <script>
