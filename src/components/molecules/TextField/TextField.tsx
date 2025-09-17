@@ -14,7 +14,7 @@ type TextFieldProps = {
 
 const textFieldVariants = cva("", {
   variants: {
-    variant: {
+    labelBehavior: {
       floating: "relative",
       placeholder: "",
     },
@@ -26,13 +26,13 @@ const textFieldVariants = cva("", {
   },
   defaultVariants: {
     size: "sm",
-    variant: "floating",
+    labelBehavior: "floating",
   },
 });
 
 const inputVariants = cva(null, {
   variants: {
-    variant: {
+    labelBehavior: {
       floating: "peer",
       placeholder: "",
     },
@@ -44,35 +44,34 @@ const inputVariants = cva(null, {
   },
   compoundVariants: [
     {
-      variant: "floating",
+      labelBehavior: "floating",
       size: "sm",
       class: `pt-3`,
     },
     {
-      variant: "floating",
+      labelBehavior: "floating",
       size: "md",
       class: "pt-4",
     },
     {
-      variant: "floating",
+      labelBehavior: "floating",
       size: "lg",
       class: "pt-5",
     },
   ],
   defaultVariants: {
-    variant: "floating",
+    labelBehavior: "floating",
     size: "sm",
   },
 });
 
 const labelVariants = cva("", {
   variants: {
-    variant: {
+    labelBehavior: {
       floating:
         "pointer-events-none absolute transition-all text-font-secondary \
         left-[0.55rem] top-1/2 -translate-y-1/2 \
-        peer-focus:top-1 \
-        peer-[&:not(:placeholder-shown)]:top-1",
+        peer-focus:top-1 peer-[&:not(:placeholder-shown)]:top-1 leading-none",
       horizontal: "",
       placeholder: "",
     },
@@ -80,18 +79,18 @@ const labelVariants = cva("", {
   },
   compoundVariants: [
     {
-      variant: "floating",
+      labelBehavior: "floating",
       size: "sm",
       class: `
         peer-placeholder-shown:text-sm
         peer-focus:text-[0.625rem]
         peer-[&:not(:placeholder-shown)]:text-[0.625rem]
-        peer-focus:translate-y-0
+        peer-focus:translate-y-0.5
         peer-[&:not(:placeholder-shown)]:translate-y-0
       `,
     },
     {
-      variant: "floating",
+      labelBehavior: "floating",
       size: "md",
       class: `
         peer-placeholder-shown:text-base
@@ -102,7 +101,7 @@ const labelVariants = cva("", {
       `,
     },
     {
-      variant: "floating",
+      labelBehavior: "floating",
       size: "lg",
       class: `
         peer-placeholder-shown:text-lg
@@ -117,28 +116,28 @@ const labelVariants = cva("", {
 });
 export function TextField({
   size,
-  variant,
+  labelBehavior,
   label,
   id,
   error,
   hint,
   className,
 }: TextFieldProps) {
-  const isFloating = (variant ?? "floating") === "floating";
+  const isFloating = (labelBehavior ?? "floating") === "floating";
 
   return (
-    <div className={twMerge(textFieldVariants({ size, variant }), className)}>
+    <div className={twMerge(textFieldVariants({ size, labelBehavior }), className)}>
       <Input
         id={id}
         inputSize={size}
-        variant={error ? "error" : undefined}
+        appearance={error ? "error" : undefined}
         placeholder={isFloating ? " " : label}
-        className={inputVariants({ size, variant })}
+        className={inputVariants({ size, labelBehavior })}
       />
       <Label
         htmlFor={id}
         className={twMerge(
-          labelVariants({ size, variant }),
+          labelVariants({ size, labelBehavior }),
           !isFloating && "hidden"
         )}
       >

@@ -103,6 +103,9 @@
 
 :root {
   /* base form field values  start*/
+
+  --field-padding-x: --spacing(2);
+
   --field-sm: --spacing(10);
   --field-md: --spacing(12);
   --field-lg: --spacing(14);

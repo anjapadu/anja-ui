@@ -15,6 +15,7 @@ import {
 import Typography from "../../atoms/Typography/Typography";
 import { Label } from "../../atoms/Label/Label";
 import { escapeRegExp } from "../../../utils/escapeRegex";
+import { Input } from "../../atoms/Input";
 
 const fieldWrapperVariants = cva(null, {
   variants: {
@@ -74,9 +75,7 @@ const labelVariants = cva(null, {
 });
 
 const comboboxInputVariants = cva(
-  "peer w-full px-2 border border-border box-border \
-  text-font-primary placeholder-font-secondary \
-  focus:outline-none focus-visible:outline-none",
+  "peer w-full px-2 border border-border box-border text-font-primary placeholder-font-secondary",
   {
     variants: {
       variant: {
@@ -228,6 +227,7 @@ export function ComboboxField({
         virtual={virtualProp}
       >
         <ComboboxInput
+          as={Input}
           id={id}
           aria-invalid={!!error}
           placeholder={isFloating ? " " : placeholder}

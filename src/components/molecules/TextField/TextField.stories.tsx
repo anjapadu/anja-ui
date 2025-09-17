@@ -12,7 +12,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const VariantsMatrix: Story = {
+export const LabelBehaviorsMatrix: Story = {
   parameters: {
     chromatic: { disableSnapshot: true },
   },
@@ -21,7 +21,7 @@ export const VariantsMatrix: Story = {
     id: "tf",
   },
   render: (args) => {
-    const variants = ["placeholder", "floating"] as const;
+    const labelBehaviors = ["placeholder", "floating"] as const;
     const sizes = ["sm", "md", "lg"] as const;
 
     return (
@@ -31,28 +31,28 @@ export const VariantsMatrix: Story = {
             <h4 className="text-sm font-semibold opacity-70">Size: {size}</h4>
 
             <div className="flex flex-col gap-6">
-              {variants.map((variant) => (
+              {labelBehaviors.map((labelBehavior) => (
                 <div
-                  key={`${size}-${variant}`}
+                  key={`${size}-${labelBehavior}`}
                   className="flex items-start gap-3"
                 >
                   <div className="w-28 shrink-0 text-xs opacity-60">
-                    {variant}
+                    {labelBehavior}
                   </div>
 
                   <div className="flex flex-wrap items-start gap-4">
                     <TextField
                       {...args}
                       size={size}
-                      variant={variant}
-                      id={`tf-${size}-${variant}-error`}
+                      labelBehavior={labelBehavior}
+                      id={`tf-${size}-${labelBehavior}-error`}
                       error="Required field"
                     />
                     <TextField
                       {...args}
                       size={size}
-                      variant={variant}
-                      id={`tf-${size}-${variant}-hint`}
+                      labelBehavior={labelBehavior}
+                      id={`tf-${size}-${labelBehavior}-hint`}
                       hint="This is a hint"
                     />
                   </div>
@@ -71,6 +71,6 @@ export const Default: Story = {
     id: "example",
     label: "Label",
     size: "sm",
-    variant: "placeholder",
+    labelBehavior: "placeholder",
   },
 };

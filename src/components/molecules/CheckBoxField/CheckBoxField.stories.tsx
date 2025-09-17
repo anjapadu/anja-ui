@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { CheckBox } from "./CheckBox";
+import { CheckboxField } from "./CheckBoxField";
 
 const meta = {
-  title: "Atoms/CheckBox",
-  component: CheckBox,
+  title: "Molecules/CheckboxField",
+  component: CheckboxField,
   parameters: {
     layout: "centered",
     controls: { expanded: true },
@@ -14,20 +14,15 @@ const meta = {
       options: ["sm", "md", "lg"],
     },
   },
-} satisfies Meta<typeof CheckBox>;
+} satisfies Meta<typeof CheckboxField>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    hoverBackground: true
-  },
-};
-
-export const Box: Story = {
-  args: {
-    appearance: "box",
-    children: "Loaner",
+    label: "New comments",
+    id: "someid",
+    description: "Get notified when someones posts a comment on a posting.",
   },
 };
