@@ -9,7 +9,7 @@ const inputVariants = cva(
   "px-2 border-border border box-border text-font-primary placeholder-font-secondary",
   {
     variants: {
-      variant: {
+      appearance: {
         default: "outline-neutral-300 disabled:opacity-75",
         error: "outline-danger border-danger",
         success: "outline-success border-success",
@@ -17,22 +17,22 @@ const inputVariants = cva(
       inputSize: {
         sm: "h-field-sm text-sm field-radius",
         md: "h-field-md text-md field-radius",
-        lg: "h-field-lg text-lg field-radius",
+        lg: "h-field-lg text-xl field-radius",
       },
     },
     defaultVariants: {
       inputSize: "sm",
-      variant: "default",
+      appearance: "default",
     },
   }
 );
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ variant, inputSize, className, ...props }, ref) => {
+  ({ appearance, inputSize, className, ...props }, ref) => {
     return (
       <input
         ref={ref}
-        className={twMerge(inputVariants({ variant, inputSize }), className)}
+        className={twMerge(inputVariants({ appearance, inputSize }), className)}
         {...props}
       />
     );

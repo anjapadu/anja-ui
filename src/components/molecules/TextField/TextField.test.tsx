@@ -21,7 +21,7 @@ describe("TextField", () => {
 
   it("renders placeholder variant: hides label visually and uses label as placeholder", () => {
     const { container } = render(
-      <TextField id="email" label="Email" variant="placeholder" />
+      <TextField id="email" label="Email" labelBehavior="placeholder" />
     );
 
     const input = container.querySelector("input") as HTMLInputElement;

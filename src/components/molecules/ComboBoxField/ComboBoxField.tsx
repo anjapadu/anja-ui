@@ -15,6 +15,7 @@ import {
 import Typography from "../../atoms/Typography/Typography";
 import { Label } from "../../atoms/Label/Label";
 import { escapeRegExp } from "../../../utils/escapeRegex";
+import { Input } from "../../atoms/Input";
 
 const fieldWrapperVariants = cva(null, {
   variants: {
@@ -28,10 +29,9 @@ const labelVariants = cva(null, {
   variants: {
     variant: {
       floating:
-        "left-2 \
-        pointer-events-none absolute transition-all text-font-secondary \
+        "pointer-events-none absolute transition-all text-font-secondary \
         left-[0.55rem] top-1/2 -translate-y-1/2 \
-        peer-focus:top-1 peer-[&:not(:placeholder-shown)]:top-1",
+        peer-focus:top-1 peer-[&:not(:placeholder-shown)]:top-1 leading-none",
       placeholder: "",
     },
     size: { sm: null, md: null, lg: null },
@@ -44,8 +44,8 @@ const labelVariants = cva(null, {
         peer-placeholder-shown:text-sm
         peer-focus:text-[0.625rem]
         peer-[&:not(:placeholder-shown)]:text-[0.625rem]
-        peer-focus:translate-y-0
-        peer-[&:not(:placeholder-shown)]:translate-y-0
+        peer-focus:translate-y-0.5
+        peer-[&:not(:placeholder-shown)]:translate-y-0.5
       `,
     },
     {
@@ -75,9 +75,7 @@ const labelVariants = cva(null, {
 });
 
 const comboboxInputVariants = cva(
-  "peer w-full px-2 border border-border box-border \
-  text-font-primary placeholder-font-secondary \
-  focus:outline-none focus-visible:outline-none",
+  "peer w-full px-2 border border-border box-border text-font-primary placeholder-font-secondary",
   {
     variants: {
       variant: {
@@ -87,7 +85,7 @@ const comboboxInputVariants = cva(
       size: {
         sm: "h-field-sm text-sm field-radius",
         md: "h-field-md text-md field-radius",
-        lg: "h-field-lg text-lg field-radius",
+        lg: "h-field-lg text-xl field-radius",
       },
     },
     compoundVariants: [
@@ -141,7 +139,19 @@ export type Option = {
   [k: string]: string | undefined | ReactNode;
 };
 
-export type ComboboxFieldProps = {
+export type SingleProps = {
+  multiple?: false;
+  value: Option | null;
+  onChange: (v: Option | null) => void;
+};
+
+export type MultiProps = {
+  multiple: true;
+  value: Option[];
+  onChange: (v: Option[]) => void;
+};
+
+export type ComboboxFieldProps = SingleProps & {
   id: string;
   label?: string;
   items: Option[];
@@ -198,7 +208,8 @@ export function ComboboxField({
 
   const isFloating = variant === "floating";
 
-  const displayValue = (item: Option | null) => (item ? item.label : "");
+  const displayValue = (val: Option | Option[] | null) =>
+    Array.isArray(val) ? val.map((v) => v.label).join(", ") : val?.label ?? "";
 
   const useVirtual =
     virtualized && (virtualThreshold ? items.length > virtualThreshold : true);
@@ -216,6 +227,7 @@ export function ComboboxField({
         virtual={virtualProp}
       >
         <ComboboxInput
+          as={Input}
           id={id}
           aria-invalid={!!error}
           placeholder={isFloating ? " " : placeholder}

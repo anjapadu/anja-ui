@@ -103,10 +103,21 @@
 
 :root {
   /* base form field values  start*/
+
+  --field-padding-x: --spacing(2);
+
   --field-sm: --spacing(10);
   --field-md: --spacing(12);
   --field-lg: --spacing(14);
   --field-radius: --spacing(1);
+
+  --chekbox-sm: --spacing(5);
+  --chekbox-md: --spacing(6);
+  --chekbox-lg: --spacing(8);
+
+  --chekbox-bg-sm: --spacing(11);
+  --chekbox-bg-md: --spacing(13);
+  --chekbox-bg-lg: --spacing(18);
   /* base form field values end */
 }
 
