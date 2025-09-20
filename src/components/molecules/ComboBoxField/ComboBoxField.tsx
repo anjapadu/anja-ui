@@ -82,11 +82,7 @@ const comboboxInputVariants = cva(
         floating: "peer",
         placeholder: null,
       },
-      size: {
-        sm: "h-field-sm text-sm field-radius",
-        md: "h-field-md text-md field-radius",
-        lg: "h-field-lg text-xl field-radius",
-      },
+      size: { sm: null, md: null, lg: null },
     },
     compoundVariants: [
       {
@@ -105,6 +101,10 @@ const comboboxInputVariants = cva(
         class: "pt-5",
       },
     ],
+    defaultVariants: {
+      size: "sm",
+      variant: "floating",
+    },
   }
 );
 
@@ -240,6 +240,7 @@ export function ComboboxField({
               variant,
             })
           )}
+          inputSize={size}
           {...inputProps}
         />
 
