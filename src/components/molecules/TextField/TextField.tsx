@@ -87,7 +87,7 @@ const labelVariants = cva("", {
         peer-focus:text-[0.625rem]
         peer-[&:not(:placeholder-shown)]:text-[0.625rem]
         peer-focus:translate-y-0.5
-        peer-[&:not(:placeholder-shown)]:translate-y-0
+        peer-[&:not(:placeholder-shown)]:translate-y-0.5
       `,
     },
     {

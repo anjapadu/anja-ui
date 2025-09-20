@@ -72,18 +72,18 @@ const layout: Layout<FormData> = [
       label: "Nombre comercial",
     },
   ],
-  // [
-  //   { name: "company.vat", component: "input", label: "RUC/VAT" },
-  //   { name: "company.size", component: "select", label: "Tamaño" },
-  // ],
+  [
+    { name: "company.vat", component: "input", label: "RUC/VAT" },
+    { name: "company.size", component: "input", label: "Tamaño" },
+  ],
 
-  // { title: "Dirección" },
-  // [
-  //   { name: "address.country", component: "select", label: "País" },
-  //   { name: "address.state", component: "input", label: "Estado" },
-  //   { name: "address.city", component: "input", label: "Ciudad" },
-  //   { name: "address.zip", component: "input", label: "Código Postal" },
-  // ],
+  { title: "Dirección" },
+  [
+    { name: "address.country", component: "input", label: "País" },
+    { name: "address.state", component: "input", label: "Estado" },
+    { name: "address.city", component: "input", label: "Ciudad" },
+    { name: "address.zip", component: "input", label: "Código Postal" },
+  ],
   // [{ name: "address.line1", component: "textarea", label: "Dirección" }],
 
   // { title: "Contactos" },
@@ -119,15 +119,13 @@ const layout: Layout<FormData> = [
 ];
 
 export const OnePageForm: Story = {
-  args: {
-    schema,
-    layout,
-  },
   render: (props) => {
     return (
       <div className="flex flex-col gap-y-2">
-        <Form
+        <Form<FormData>
           {...props}
+          schema={schema}
+          layout={layout}
           renderers={createDefaultRenderers<FormData>({
             input: { labelBehavior: "floating" },
           })}
