@@ -119,6 +119,10 @@ const layout: Layout<FormData> = [
 ];
 
 export const OnePageForm: Story = {
+  args: {
+    schema,
+    layout,
+  },
   render: (props) => {
     return (
       <div className="flex flex-col gap-y-2">

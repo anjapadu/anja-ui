@@ -121,11 +121,7 @@ function renderBlock<T extends FieldValues>(
   }
 
   const field = blk as FieldRef<T>;
-  const toPath = <T extends FieldValues>(name: FieldRef<T>["name"]) =>
-    name as unknown as string;
-
-  const path = toPath(field.name);
-
+  const path = field.name as string;
   const render = renderers[field.component];
 
   if (!render) {
