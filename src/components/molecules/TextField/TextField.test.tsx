@@ -34,14 +34,14 @@ describe("TextField", () => {
 
   it("applies size-based padding classes on input for floating variant", () => {
     const { container: cm } = render(
-      <TextField id="m" label="Medium" size="md" />
+      <TextField id="m" label="Medium" inputSize="md" />
     );
     const im = cm.querySelector("input")!;
     console.log("im.className", im.className);
     expect(im.className).toContain("pt-4");
 
     const { container: cl } = render(
-      <TextField id="l" label="Large" size="lg" />
+      <TextField id="l" label="Large" inputSize="lg" />
     );
     const il = cl.querySelector("input")!;
     expect(il.className).toContain("pt-5");

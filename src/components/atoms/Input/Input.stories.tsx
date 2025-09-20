@@ -40,7 +40,7 @@ export const VariantsMatrix: Story = {
                   </div>
 
                   <div className="flex gap-2">
-                    <Input variant={variant} inputSize={size} {...args} />
+                    <Input appearance={variant} inputSize={size} {...args} />
                     {/* <Input
                       variant={variant}
                       inputSize={size}
@@ -62,6 +62,6 @@ export const Default: Story = {
   args: {
     placeholder: "A placeholder",
     inputSize: "sm",
-    variant: "default",
+    appearance: "default",
   },
 };

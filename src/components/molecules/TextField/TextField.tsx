@@ -1,12 +1,13 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import { Input } from "../../atoms/Input/Input";
+import { Input, type InputProps } from "../../atoms/Input/Input";
 import { Label } from "../../atoms/Label/Label";
 import { twMerge } from "tailwind-merge";
 import Typography from "../../atoms/Typography/Typography";
+import { Controller, type ControllerProps } from "react-hook-form";
 
-type TextFieldProps = {
+type TextFieldProps = Omit<InputProps, "className"> & {
   label?: string;
-  id: string;
+  id?: string;
   error?: string;
   hint?: string;
   className?: string;
@@ -18,14 +19,14 @@ const textFieldVariants = cva("", {
       floating: "relative",
       placeholder: "",
     },
-    size: {
+    inputSize: {
       sm: null,
       md: null,
       lg: null,
     },
   },
   defaultVariants: {
-    size: "sm",
+    inputSize: "sm",
     labelBehavior: "floating",
   },
 });
@@ -36,7 +37,7 @@ const inputVariants = cva(null, {
       floating: "peer",
       placeholder: "",
     },
-    size: {
+    inputSize: {
       sm: null,
       md: null,
       lg: null,
@@ -45,23 +46,23 @@ const inputVariants = cva(null, {
   compoundVariants: [
     {
       labelBehavior: "floating",
-      size: "sm",
+      inputSize: "sm",
       class: `pt-3`,
     },
     {
       labelBehavior: "floating",
-      size: "md",
+      inputSize: "md",
       class: "pt-4",
     },
     {
       labelBehavior: "floating",
-      size: "lg",
+      inputSize: "lg",
       class: "pt-5",
     },
   ],
   defaultVariants: {
     labelBehavior: "floating",
-    size: "sm",
+    inputSize: "sm",
   },
 });
 
@@ -75,23 +76,23 @@ const labelVariants = cva("", {
       horizontal: "",
       placeholder: "",
     },
-    size: { sm: null, md: null, lg: null },
+    inputSize: { sm: null, md: null, lg: null },
   },
   compoundVariants: [
     {
       labelBehavior: "floating",
-      size: "sm",
+      inputSize: "sm",
       class: `
         peer-placeholder-shown:text-sm
         peer-focus:text-[0.625rem]
         peer-[&:not(:placeholder-shown)]:text-[0.625rem]
         peer-focus:translate-y-0.5
-        peer-[&:not(:placeholder-shown)]:translate-y-0
+        peer-[&:not(:placeholder-shown)]:translate-y-0.5
       `,
     },
     {
       labelBehavior: "floating",
-      size: "md",
+      inputSize: "md",
       class: `
         peer-placeholder-shown:text-base
         peer-focus:text-xs
@@ -102,7 +103,7 @@ const labelVariants = cva("", {
     },
     {
       labelBehavior: "floating",
-      size: "lg",
+      inputSize: "lg",
       class: `
         peer-placeholder-shown:text-lg
         peer-focus:text-sm
@@ -112,10 +113,10 @@ const labelVariants = cva("", {
       `,
     },
   ],
-  defaultVariants: { size: "sm" },
+  defaultVariants: { inputSize: "sm" },
 });
 export function TextField({
-  size,
+  inputSize,
   labelBehavior,
   label,
   id,
@@ -126,18 +127,23 @@ export function TextField({
   const isFloating = (labelBehavior ?? "floating") === "floating";
 
   return (
-    <div className={twMerge(textFieldVariants({ size, labelBehavior }), className)}>
+    <div
+      className={twMerge(
+        textFieldVariants({ inputSize, labelBehavior }),
+        className
+      )}
+    >
       <Input
         id={id}
-        inputSize={size}
+        inputSize={inputSize}
         appearance={error ? "error" : undefined}
         placeholder={isFloating ? " " : label}
-        className={inputVariants({ size, labelBehavior })}
+        className={inputVariants({ inputSize, labelBehavior })}
       />
       <Label
         htmlFor={id}
         className={twMerge(
-          labelVariants({ size, labelBehavior }),
+          labelVariants({ inputSize, labelBehavior }),
           !isFloating && "hidden"
         )}
       >
@@ -154,5 +160,29 @@ export function TextField({
         </Typography>
       )}
     </div>
+  );
+}
+
+export type FormTextFieldProps = TextFieldProps & {
+  name: string;
+  controller?: Pick<
+    ControllerProps,
+    "defaultValue" | "disabled" | "rules" | "shouldUnregister"
+  >;
+};
+
+export function FormTextField({
+  name,
+  controller,
+  ...props
+}: FormTextFieldProps) {
+  return (
+    <Controller
+      {...controller}
+      name={name}
+      render={({ field }) => {
+        return <TextField {...props} {...field} />;
+      }}
+    />
   );
 }

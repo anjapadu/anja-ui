@@ -22,11 +22,11 @@ export const LabelBehaviorsMatrix: Story = {
   },
   render: (args) => {
     const labelBehaviors = ["placeholder", "floating"] as const;
-    const sizes = ["sm", "md", "lg"] as const;
+    const inputSizes = ["sm", "md", "lg"] as const;
 
     return (
       <div className="flex flex-col gap-8">
-        {sizes.map((size) => (
+        {inputSizes.map((size) => (
           <section key={size} className="space-y-3">
             <h4 className="text-sm font-semibold opacity-70">Size: {size}</h4>
 
@@ -43,14 +43,14 @@ export const LabelBehaviorsMatrix: Story = {
                   <div className="flex flex-wrap items-start gap-4">
                     <TextField
                       {...args}
-                      size={size}
+                      inputSize={size}
                       labelBehavior={labelBehavior}
                       id={`tf-${size}-${labelBehavior}-error`}
                       error="Required field"
                     />
                     <TextField
                       {...args}
-                      size={size}
+                      inputSize={size}
                       labelBehavior={labelBehavior}
                       id={`tf-${size}-${labelBehavior}-hint`}
                       hint="This is a hint"
@@ -70,7 +70,7 @@ export const Default: Story = {
   args: {
     id: "example",
     label: "Label",
-    size: "sm",
+    inputSize: "sm",
     labelBehavior: "placeholder",
   },
 };

@@ -12,7 +12,7 @@ function ComboboxPerson(
     items?: Person[];
   }
 ) {
-  const [value, setValue] = useState<Person | null>(null);
+  const [value, setValue] = useState<Person | null | undefined>(null);
 
   const items = useMemo<Person[]>(
     () =>

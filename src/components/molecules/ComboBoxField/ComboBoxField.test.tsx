@@ -41,7 +41,7 @@ async function openList(input: HTMLInputElement, user = userEvent.setup()) {
 function ControlledHarness(
   props: Omit<React.ComponentProps<typeof ComboboxField>, "value" | "onChange">
 ) {
-  const [val, setVal] = React.useState<Option | null>(null);
+  const [val, setVal] = React.useState<Option | null>();
   return <ComboboxField {...props} value={val} onChange={(v) => setVal(v)} />;
 }
 
@@ -50,10 +50,10 @@ function TapHarness(
     React.ComponentProps<typeof ComboboxField>,
     "value" | "onChange"
   > & {
-    onChangeSpy: (v: Option | null) => void;
+    onChangeSpy: (v?: Option | null) => void;
   }
 ) {
-  const [val, setVal] = React.useState<Option | null>(null);
+  const [val, setVal] = React.useState<Option | null>();
   return (
     <ComboboxField
       {...props}
