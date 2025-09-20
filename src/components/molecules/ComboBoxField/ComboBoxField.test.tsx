@@ -139,7 +139,7 @@ describe("ComboboxField", () => {
     expect(options).toEqual(["Banana"]);
   });
 
-  it.only("sets aria-invalid when error is present", () => {
+  it("sets aria-invalid when error is present", () => {
     const { input } = setup({ error: "Required" });
     expect(input).toHaveAttribute("aria-invalid", "true");
   });
