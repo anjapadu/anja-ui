@@ -1,10 +1,15 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 import { forwardRef } from "react";
-import { Input as HInput } from "@headlessui/react";
+import {
+  Input as HInput,
+  type InputProps as HInputProps,
+} from "@headlessui/react";
 
-export type InputProps = React.InputHTMLAttributes<HTMLInputElement> &
-  VariantProps<typeof inputVariants>;
+export type InputProps = HInputProps &
+  VariantProps<typeof inputVariants> & {
+    className: string;
+  };
 
 const inputVariants = cva(
   "px-2 border-border border box-border text-font-primary placeholder-font-secondary w-full leading-0",

@@ -17,14 +17,6 @@ import {
 } from "./renderers";
 import type { PathOf } from "./paths";
 
-// export type ComponentKind = "input";
-// | "select"
-// | "textarea"
-// | "tagpicker"
-// | "checkbox"
-// | "slider"
-// | "combobox";
-
 export type Block<T extends FieldValues> =
   | FieldRef<T>
   | Block<T>[]
@@ -122,17 +114,30 @@ function renderBlock<T extends FieldValues>(
 
   const field = blk as FieldRef<T>;
   const path = field.name as string;
-  const render = renderers[field.component];
+  let renderer;
+  switch (field.component) {
+    case "input":
+      renderer = renderers.input;
+      if (!renderer) {
+        return (
+          <div key={key} className="text-red-600 text-sm">
+            No renderer for "input"
+          </div>
+        );
+      }
+      return renderer({ field, methods, path });
 
-  if (!render) {
-    return (
-      <div key={key} className="text-red-600 text-sm">
-        No renderer for component "{field.component}"
-      </div>
-    );
+    case "combobox":
+      renderer = renderers.combobox;
+      if (!renderer) {
+        return (
+          <div key={key} className="text-red-600 text-sm">
+            No renderer for "combobox"
+          </div>
+        );
+      }
+      return renderer({ field, methods, path });
   }
-
-  return <div key={key}>{render({ field, methods, path })}</div>;
 }
 
 export function RenderLayout<T extends FieldValues>(props: RenderCtx<T>) {

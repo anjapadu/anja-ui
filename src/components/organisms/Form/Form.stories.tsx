@@ -79,7 +79,12 @@ const layout: Layout<FormData> = [
 
   { title: "Dirección" },
   [
-    { name: "address.country", component: "input", label: "País" },
+    {
+      name: "address.country",
+      component: "combobox",
+      label: "País",
+      options: [{ label: "Gustavo Yance", value: "guance" }],
+    },
     { name: "address.state", component: "input", label: "Estado" },
     { name: "address.city", component: "input", label: "Ciudad" },
     { name: "address.zip", component: "input", label: "Código Postal" },

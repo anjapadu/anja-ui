@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge";
 import Typography from "../../atoms/Typography/Typography";
 import { Controller, type ControllerProps } from "react-hook-form";
 
-type TextFieldProps = InputProps & {
+type TextFieldProps = Omit<InputProps, "className"> & {
   label?: string;
   id?: string;
   error?: string;

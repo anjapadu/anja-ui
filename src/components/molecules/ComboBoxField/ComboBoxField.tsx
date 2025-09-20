@@ -16,6 +16,7 @@ import Typography from "../../atoms/Typography/Typography";
 import { Label } from "../../atoms/Label/Label";
 import { escapeRegExp } from "../../../utils/escapeRegex";
 import { Input } from "../../atoms/Input";
+import { Controller, type ControllerProps } from "react-hook-form";
 
 const fieldWrapperVariants = cva(null, {
   variants: {
@@ -141,8 +142,8 @@ export type Option = {
 
 export type SingleProps = {
   multiple?: false;
-  value: Option | null;
-  onChange: (v: Option | null) => void;
+  value?: Option | null;
+  onChange: (v?: Option | null) => void;
 };
 
 export type MultiProps = {
@@ -155,12 +156,12 @@ export type ComboboxFieldProps = SingleProps & {
   id: string;
   label?: string;
   items: Option[];
-  value: Option | null;
+  value?: Option | null;
   renderOption?: (
     option: Option,
     state: { focus: boolean; selected: boolean; disabled: boolean }
   ) => React.ReactNode;
-  onChange: (value: Option | null) => void;
+  onChange: (value?: Option | null) => void;
   customFilter?: (items: Option[], query: string) => Option[];
   getLabel?: (option: Option) => string | React.ReactElement;
   placeholder?: string;
@@ -214,6 +215,7 @@ export function ComboboxField({
   const useVirtual =
     virtualized && (virtualThreshold ? items.length > virtualThreshold : true);
   const virtualProp = useVirtual ? { options: filtered } : undefined;
+  console.log({ error });
   return (
     <div
       className={twMerge(fieldWrapperVariants({ variant, size }), className)}
@@ -229,11 +231,10 @@ export function ComboboxField({
         <ComboboxInput
           as={Input}
           id={id}
-          aria-invalid={!!error}
+          invalid={!!error}
           placeholder={isFloating ? " " : placeholder}
           displayValue={displayValue}
           onChange={(e) => setQuery(e.target.value)}
-          autoComplete="off"
           className={twMerge(
             comboboxInputVariants({
               size,
@@ -241,6 +242,7 @@ export function ComboboxField({
             })
           )}
           inputSize={size}
+          autoComplete="off"
           {...inputProps}
         />
 
@@ -311,5 +313,32 @@ export function ComboboxField({
         </Typography>
       )}
     </div>
+  );
+}
+
+export type FormComboBoxFieldProps = Omit<
+  ComboboxFieldProps,
+  "onChange" | "value"
+> & {
+  name: string;
+  controller?: Pick<
+    ControllerProps,
+    "defaultValue" | "disabled" | "rules" | "shouldUnregister"
+  >;
+};
+
+export function FormComboboxField({
+  name,
+  controller,
+  ...props
+}: FormComboBoxFieldProps) {
+  return (
+    <Controller
+      {...controller}
+      name={name}
+      render={({ field }) => {
+        return <ComboboxField {...props} {...field} />;
+      }}
+    />
   );
 }

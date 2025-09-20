@@ -3,32 +3,60 @@ import {
   FormTextField,
   type FormTextFieldProps,
 } from "../../molecules/TextField";
+import {
+  FormComboboxField,
+  type FormComboBoxFieldProps,
+} from "../../molecules/ComboBoxField";
 import type { PathOf } from "./paths";
 
-export type ComponentKind = "input";
+export type ComponentKind = "input" | "combobox";
 
-export type FieldRef<T extends FieldValues> = {
+type BaseFieldRef<T extends FieldValues> = {
   name: PathOf<T>;
-  component: "input";
   label?: string;
   colSpan?: number;
+};
+
+export type InputFieldRef<T extends FieldValues> = BaseFieldRef<T> & {
+  component: "input";
   inputProps?: Omit<FormTextFieldProps, "name">;
 };
 
-export type FieldProps<T extends FieldValues> = {
-  field: FieldRef<T>;
+export type ComboboxOption = { label: string; value: string };
+export type ComboboxFieldRef<T extends FieldValues> = BaseFieldRef<T> & {
+  component: "combobox";
+  options: ComboboxOption[];
+  comboProps?: Omit<FormComboBoxFieldProps, "name" | "options">;
+};
+
+export type FieldRef<T extends FieldValues> =
+  | InputFieldRef<T>
+  | ComboboxFieldRef<T>;
+
+export type FieldPropsBase<T extends FieldValues, F extends FieldRef<T>> = {
+  field: F;
   methods: UseFormReturn<T>;
   path: string;
 };
 
-export type Renderers<T extends FieldValues> = Partial<
-  Record<ComponentKind, (p: FieldProps<T>) => React.ReactNode>
->;
+export type FieldPropsFor<
+  K extends ComponentKind,
+  T extends FieldValues
+> = K extends "input"
+  ? FieldPropsBase<T, InputFieldRef<T>>
+  : K extends "combobox"
+  ? FieldPropsBase<T, ComboboxFieldRef<T>>
+  : never;
+
+export type Renderers<T extends FieldValues> = {
+  input?: (p: FieldPropsFor<"input", T>) => React.ReactNode;
+  combobox?: (p: FieldPropsFor<"combobox", T>) => React.ReactNode;
+};
 
 function getError<T extends FieldValues>(
   methods: UseFormReturn<T>,
   path: string
-): string | undefined {
+) {
   const tokens = path.match(/[^.[\]]+/g) ?? [];
   let cur: unknown = methods.formState.errors as unknown;
   for (const tk of tokens) {
@@ -44,6 +72,7 @@ function getError<T extends FieldValues>(
 
 type RendererDefaults = {
   input?: Omit<FormTextFieldProps, "name">;
+  combobox?: Omit<FormComboBoxFieldProps, "name" | "options">;
 };
 
 export function createDefaultRenderers<T extends FieldValues>(
@@ -57,6 +86,17 @@ export function createDefaultRenderers<T extends FieldValues>(
         error={getError(methods, path)}
         {...defaults?.input}
         {...field.inputProps}
+      />
+    ),
+    combobox: ({ field, methods, path }) => (
+      <FormComboboxField
+        name={path}
+        id={path}
+        label={field.label}
+        items={field.options || []}
+        error={getError(methods, path)}
+        {...defaults?.combobox}
+        {...field.comboProps}
       />
     ),
   };
