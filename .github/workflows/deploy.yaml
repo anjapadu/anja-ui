@@ -1,4 +1,4 @@
-name: Release
+name: Release (npmjs)
 
 on:
   push:
@@ -8,53 +8,41 @@ on:
 permissions:
   contents: read
   id-token: write
-concurrency:
-  group: release-${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
   publish:
-    name: Publish to npm
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Use PNPM
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 10 }
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: "pnpm"
-          registry-url: "https://registry.npmjs.org"
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
 
-      - name: Install
-        run: pnpm install --frozen-lockfile
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build-package
 
-      - name: Build
-        run: pnpm build-package
-
-      # (Opcional) Validar que el tag coincida con package.json version
       - name: Check tag matches package.json version
         run: |
-          TAG_VERSION="${GITHUB_REF#refs/tags/v}"
-          PKG_VERSION=$(node -p "require('./package.json').version")
-          if [ "$TAG_VERSION" != "$PKG_VERSION" ]; then
-            echo "Tag version (v$TAG_VERSION) does not match package.json version ($PKG_VERSION)."
-            exit 1
-          fi
+          TAG="${GITHUB_REF#refs/tags/v}"
+          PKG=$(node -p "require('./package.json').version")
+          [ "$TAG" = "$PKG" ] || { echo "Tag v$TAG != package.json $PKG"; exit 1; }
 
-      - name: Configure npm auth
+      - name: Configure npm auth (npmjs)
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN}
+          set -euxo pipefail
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          npm config get registry                 # debe ser https://registry.npmjs.org/
+          npm whoami                              # debe imprimir: anjapadu
+          test "$(npm whoami)" = "anjapadu"
+          npm view $(node -p "require('./package.json').name") || true
+          npm pack --dry-run
 
-      - name: Publish
-        run: |
-          pnpm publish --access public --no-git-checks --provenance
+      # primero sin provenance para aislar errores de auth/permiso
+      - name: Publish to npmjs
+        run: pnpm publish --access public --no-git-checks --loglevel verbose
