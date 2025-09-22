@@ -8,7 +8,7 @@ import {
 
 export type InputProps = HInputProps &
   VariantProps<typeof inputVariants> & {
-    className: string;
+    className?: string;
   };
 
 const inputVariants = cva(
