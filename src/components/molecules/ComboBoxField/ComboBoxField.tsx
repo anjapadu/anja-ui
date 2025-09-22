@@ -12,7 +12,7 @@ import {
   type ComponentPropsWithoutRef,
   type ReactNode,
 } from "react";
-import Typography from "../../atoms/Typography/Typography";
+import { Typography } from "../../atoms/Typography/Typography";
 import { Label } from "../../atoms/Label/Label";
 import { escapeRegExp } from "../../../utils/escapeRegex";
 import { Input } from "../../atoms/Input";

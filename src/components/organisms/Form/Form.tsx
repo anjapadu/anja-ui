@@ -9,7 +9,7 @@ import {
   type UseFormReturn,
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Typography from "../../atoms/Typography/Typography";
+import { Typography } from "../../atoms/Typography/Typography";
 import {
   createDefaultRenderers,
   type FieldRef,

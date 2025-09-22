@@ -12,7 +12,7 @@ export type InputProps = HInputProps &
   };
 
 const inputVariants = cva(
-  "px-2 border-border border box-border text-font-primary placeholder-font-secondary w-full leading-0",
+  "px-2 border-border border box-border text-font-primary placeholder-font-secondary w-full leading-0 focus-visible:outline-1",
   {
     variants: {
       appearance: {

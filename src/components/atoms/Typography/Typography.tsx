@@ -94,10 +94,8 @@ function BaseTypography<C extends ElementType = "span">(
 /**
  * Needed to allow typings to be autocompleted when using `as="..."`
  * */
-const Typography = forwardRef(
+export const Typography = forwardRef(
   BaseTypography as unknown as (
     props: PolymorphicProps<ElementType> & { ref?: PolymorphicRef<ElementType> }
   ) => ReactElement | null
 ) as TypographyComponent;
-
-export default Typography;

@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import { createRef } from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Typography from "./Typography";
+import { Typography } from "./Typography";
 
 describe("<Typography />", () => {
   it("renders with defaults (variant=body → <p>, color=primary, align=left)", () => {

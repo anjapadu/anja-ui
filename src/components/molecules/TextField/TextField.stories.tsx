@@ -25,7 +25,7 @@ export const LabelBehaviorsMatrix: Story = {
     const inputSizes = ["sm", "md", "lg"] as const;
 
     return (
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-8 bg-primary-200">
         {inputSizes.map((size) => (
           <section key={size} className="space-y-3">
             <h4 className="text-sm font-semibold opacity-70">Size: {size}</h4>

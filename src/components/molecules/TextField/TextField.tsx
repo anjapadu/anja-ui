@@ -2,7 +2,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { Input, type InputProps } from "../../atoms/Input/Input";
 import { Label } from "../../atoms/Label/Label";
 import { twMerge } from "tailwind-merge";
-import Typography from "../../atoms/Typography/Typography";
+import { Typography } from "../../atoms/Typography/Typography";
 import { Controller, type ControllerProps } from "react-hook-form";
 
 type TextFieldProps = Omit<InputProps, "className"> & {
@@ -123,6 +123,7 @@ export function TextField({
   error,
   hint,
   className,
+  ...props
 }: TextFieldProps) {
   const isFloating = (labelBehavior ?? "floating") === "floating";
 
@@ -139,6 +140,7 @@ export function TextField({
         appearance={error ? "error" : undefined}
         placeholder={isFloating ? " " : label}
         className={inputVariants({ inputSize, labelBehavior })}
+        {...props}
       />
       <Label
         htmlFor={id}

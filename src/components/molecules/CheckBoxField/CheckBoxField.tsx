@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { CheckBox, type CheckBoxProps } from "../../atoms/CheckBox";
 import { Label } from "../../atoms/Label";
-import Typography from "../../atoms/Typography/Typography";
+import { Typography } from "../../atoms/Typography/Typography";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Field, Label as HLabel } from "@headlessui/react";
 
