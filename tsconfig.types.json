@@ -18,7 +18,6 @@
     "dist",
     "src/main.tsx",
     "src/App.tsx",
-    "src/test",
-    "vite.config.ts"
+    "src/test"
   ]
 }

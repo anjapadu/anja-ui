@@ -6,5 +6,4 @@ class ResizeObserver {
   disconnect() {}
 }
 
-// @ts-expect-error patching jsdom
 global.ResizeObserver = ResizeObserver;

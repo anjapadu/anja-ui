@@ -37,7 +37,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: pnpm build
+        run: pnpm build-package
 
       # (Opcional) Validar que el tag coincida con package.json version
       - name: Check tag matches package.json version
