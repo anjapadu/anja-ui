@@ -15,7 +15,7 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./src/styles.css": "./dist/styles.css",
+    "./styles.css": "./dist/styles.css",
     "./components/*": {
       "types": "./dist/components/*/index.d.ts",
       "import": "./dist/components/*/index.js",
@@ -25,7 +25,9 @@
   "files": [
     "dist"
   ],
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css"
+  ],
   "peerDependencies": {
     "react": ">=19",
     "react-dom": ">=19",
@@ -42,13 +44,14 @@
     "generate-coverage-report": "generate-coverage-report -p ./coverage/badges",
     "build:types": "tsc -p tsconfig.types.json",
     "build:js": "tsup",
-    "build-package": "pnpm build:js && pnpm build:types",
+    "build-package": "pnpm build:js && pnpm build:types && pnpm build:css",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "build:css": "cp src/styles.css dist/styles.css"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.7",
