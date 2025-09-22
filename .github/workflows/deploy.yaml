@@ -1,7 +1,9 @@
 name: Release (npmjs)
+
 on:
   push:
-    tags: ["v*.*.*"]
+    tags:
+      - "v*.*.*"
 
 permissions:
   contents: read
@@ -12,15 +14,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: pnpm/action-setup@v4
-        with: { version: 10 }
+        with:
+          version: 10
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: pnpm
           registry-url: https://registry.npmjs.org
-          always-auth: true   # <- clave
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm build-package
+          always-auth: true
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build-package
 
       - name: Check tag matches package.json version
         run: |
@@ -28,22 +38,9 @@ jobs:
           PKG=$(node -p "require('./package.json').version")
           [ "$TAG" = "$PKG" ] || { echo "Tag v$TAG != package.json $PKG"; exit 1; }
 
-      - name: Assert npm auth & registry
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}   # <- pasa el token aquí
-        run: |
-          set -euxo pipefail
-          npm config get registry                      # debe ser https://registry.npmjs.org/
-          npm whoami                                   # debe imprimir: anjapadu
-          test "$(npm whoami)" = "anjapadu"
-          npm config get @anjapadu:registry || true
-          npm config delete @anjapadu:registry || true
-          npm view $(node -p "require('./package.json').name") || true
-          npm pack --dry-run
-
-      # Publica (primero sin provenance; si pasa, vuelve a activarlo)
       - name: Publish to npmjs
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
+          npm whoami
           npm publish --access public --loglevel verbose
