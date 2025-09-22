@@ -1,7 +1,7 @@
 {
   "name": "@anjapadu/anja-ui",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publishConfig": {
     "access": "public"
   },
@@ -15,6 +15,7 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
+    "./src/styles.css": "./dist/styles.css",
     "./components/*": {
       "types": "./dist/components/*/index.d.ts",
       "import": "./dist/components/*/index.js",
