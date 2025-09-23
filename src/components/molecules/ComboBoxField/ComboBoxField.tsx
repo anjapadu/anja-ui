@@ -216,7 +216,6 @@ export function ComboboxField({
   const useVirtual =
     virtualized && (virtualThreshold ? items.length > virtualThreshold : true);
   const virtualProp = useVirtual ? { options: filtered } : undefined;
-  console.log({ error });
   return (
     <div
       className={twMerge(fieldWrapperVariants({ variant, size }), className)}

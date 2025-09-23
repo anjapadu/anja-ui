@@ -37,7 +37,6 @@ describe("TextField", () => {
       <TextField id="m" label="Medium" inputSize="md" />
     );
     const im = cm.querySelector("input")!;
-    console.log("im.className", im.className);
     expect(im.className).toContain("pt-4");
 
     const { container: cl } = render(
