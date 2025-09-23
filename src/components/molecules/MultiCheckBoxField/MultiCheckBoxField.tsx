@@ -97,26 +97,6 @@ export function MultiCheckboxField({
         </Typography>
       ) : null}
 
-      {showSelectControls ? (
-        <div className="flex items-center gap-3 pt-1">
-          <button
-            type="button"
-            className="underline underline-offset-2 hover:no-underline"
-            onClick={selectAll}
-          >
-            Select all
-          </button>
-          <span aria-hidden>·</span>
-          <button
-            type="button"
-            className="underline underline-offset-2 hover:no-underline"
-            onClick={clearAll}
-          >
-            Clear
-          </button>
-        </div>
-      ) : null}
-
       <Field className={multiWrap({ spacing, columns })}>
         {options.map((opt) => {
           const id =
@@ -165,6 +145,26 @@ export function MultiCheckboxField({
           );
         })}
       </Field>
+
+      {showSelectControls ? (
+        <div className="flex items-center gap-3 pt-1">
+          <button
+            type="button"
+            className="underline underline-offset-2 hover:no-underline cursor-pointer text-xs"
+            onClick={selectAll}
+          >
+            Select all
+          </button>
+          {/* <span aria-hidden>·</span> */}
+          <button
+            type="button"
+            className="underline underline-offset-2 hover:no-underline cursor-pointer text-xs"
+            onClick={clearAll}
+          >
+            Clear
+          </button>
+        </div>
+      ) : null}
 
       {showError && !!error ? (
         <Typography className="bg-danger mt-1">{error}</Typography>

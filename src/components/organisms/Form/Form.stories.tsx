@@ -94,9 +94,10 @@ const layout: Layout<FormData> = [
       name: "tech.stack",
       component: "multicheckbox",
       multiCheckboxProps: {
-        label: "Select all",
+        label: "Technologies used",
         checkboxAppearance: "box",
         spacing: "default",
+        showSelectControls: true,
       },
       options: [
         { label: "React", value: "react" },

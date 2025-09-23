@@ -165,7 +165,7 @@ function renderBlock<T extends FieldValues>(
 
 export function RenderLayout<T extends FieldValues>(props: RenderCtx<T>) {
   const { layout } = props;
-  return <>{layout.map((blk, i) => renderBlock(blk, props, i))}</>;
+  return <div className="gap-y-8 flex flex-col">{layout.map((blk, i) => renderBlock(blk, props, i))}</div>;
 }
 
 function FormValue() {
