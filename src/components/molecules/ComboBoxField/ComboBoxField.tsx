@@ -137,6 +137,7 @@ export type Option = {
   image?: string;
   leftItem?: ReactNode;
   rightItem?: ReactNode;
+  disabled?: boolean;
   [k: string]: string | undefined | ReactNode;
 };
 

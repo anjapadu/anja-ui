@@ -83,12 +83,40 @@ const layout: Layout<FormData> = [
       name: "address.country",
       component: "combobox",
       label: "País",
-      options: [{ label: "Gustavo Yance", value: "guance" }],
+      options: [{ label: "Gustavo Yance", value: "gyance" }],
     },
     { name: "address.state", component: "input", label: "Estado" },
     { name: "address.city", component: "input", label: "Ciudad" },
     { name: "address.zip", component: "input", label: "Código Postal" },
   ],
+  [
+    {
+      name: "tech.stack",
+      component: "multicheckbox",
+      multiCheckboxProps: {
+        label: "Select all",
+        checkboxAppearance: "box",
+        spacing: "default",
+      },
+      options: [
+        { label: "React", value: "react" },
+        { label: "Vue", value: "vue" },
+        { label: "Angular", value: "angular" },
+        { label: "NodeJS", value: "node" },
+        { label: "Postgres", value: "postgres" },
+        { label: "MySQL", value: "mysql" },
+        { label: "Docker", value: "docker" },
+      ],
+    },
+  ],
+  [
+    {
+      component: "checkbox",
+      name: "consent.terms",
+      label: "Terms and conditions",
+    },
+  ],
+
   // [{ name: "address.line1", component: "textarea", label: "Dirección" }],
 
   // { title: "Contactos" },

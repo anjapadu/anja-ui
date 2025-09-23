@@ -6,10 +6,19 @@ import {
 import {
   FormComboboxField,
   type FormComboBoxFieldProps,
+  type Option,
 } from "../../molecules/ComboBoxField";
 import type { PathOf } from "./paths";
+import {
+  FormCheckBoxField,
+  type FormCheckBoxFieldProps,
+} from "../../molecules/CheckBoxField";
+import {
+  FormMultiCheckboxField,
+  type FormMultiCheckboxFieldProps,
+} from "../../molecules/MultiCheckBoxField";
 
-export type ComponentKind = "input" | "combobox";
+export type ComponentKind = "input" | "combobox" | "checkbox" | "multicheckbox";
 
 type BaseFieldRef<T extends FieldValues> = {
   name: PathOf<T>;
@@ -29,9 +38,22 @@ export type ComboboxFieldRef<T extends FieldValues> = BaseFieldRef<T> & {
   comboProps?: Omit<FormComboBoxFieldProps, "name" | "options">;
 };
 
+export type CheckBoxFieldRef<T extends FieldValues> = BaseFieldRef<T> & {
+  component: "checkbox";
+  checkboxProps?: Omit<FormCheckBoxFieldProps, "name">;
+};
+
+export type MultiCheckboxFieldRef<T extends FieldValues> = BaseFieldRef<T> & {
+  component: "multicheckbox";
+  options: Option[]; // same Option used by your ComboBoxField
+  multiCheckboxProps?: Omit<FormMultiCheckboxFieldProps, "name" | "options">;
+};
+
 export type FieldRef<T extends FieldValues> =
   | InputFieldRef<T>
-  | ComboboxFieldRef<T>;
+  | ComboboxFieldRef<T>
+  | CheckBoxFieldRef<T>
+  | MultiCheckboxFieldRef<T>;
 
 export type FieldPropsBase<T extends FieldValues, F extends FieldRef<T>> = {
   field: F;
@@ -46,11 +68,17 @@ export type FieldPropsFor<
   ? FieldPropsBase<T, InputFieldRef<T>>
   : K extends "combobox"
   ? FieldPropsBase<T, ComboboxFieldRef<T>>
+  : K extends "checkbox"
+  ? FieldPropsBase<T, CheckBoxFieldRef<T>>
+  : K extends "multicheckbox"
+  ? FieldPropsBase<T, MultiCheckboxFieldRef<T>>
   : never;
 
 export type Renderers<T extends FieldValues> = {
   input?: (p: FieldPropsFor<"input", T>) => React.ReactNode;
   combobox?: (p: FieldPropsFor<"combobox", T>) => React.ReactNode;
+  checkbox?: (p: FieldPropsFor<"checkbox", T>) => React.ReactNode;
+  multicheckbox?: (p: FieldPropsFor<"multicheckbox", T>) => React.ReactNode;
 };
 
 function getError<T extends FieldValues>(
@@ -73,6 +101,8 @@ function getError<T extends FieldValues>(
 type RendererDefaults = {
   input?: Omit<FormTextFieldProps, "name">;
   combobox?: Omit<FormComboBoxFieldProps, "name" | "options">;
+  checkbox?: Omit<FormCheckBoxFieldProps, "name">;
+  multicheckbox?: Omit<FormMultiCheckboxFieldProps, "name" | "options">;
 };
 
 export function createDefaultRenderers<T extends FieldValues>(
@@ -88,6 +118,15 @@ export function createDefaultRenderers<T extends FieldValues>(
         {...field.inputProps}
       />
     ),
+    checkbox: ({ field, methods, path }) => (
+      <FormCheckBoxField
+        name={path}
+        label={field.label ?? ""}
+        error={getError(methods, path)}
+        {...defaults?.checkbox}
+        {...field.checkboxProps}
+      />
+    ),
     combobox: ({ field, methods, path }) => (
       <FormComboboxField
         name={path}
@@ -99,5 +138,18 @@ export function createDefaultRenderers<T extends FieldValues>(
         {...field.comboProps}
       />
     ),
+    multicheckbox: ({ field, methods, path }) => {
+      const f = field as MultiCheckboxFieldRef<T>;
+      return (
+        <FormMultiCheckboxField
+          name={path}
+          label={f.label ?? ""}
+          options={f.options}
+          error={getError(methods, path)}
+          {...defaults?.multicheckbox}
+          {...f.multiCheckboxProps}
+        />
+      );
+    },
   };
 }

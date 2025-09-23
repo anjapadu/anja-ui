@@ -4,6 +4,7 @@ import { Label } from "../../atoms/Label";
 import { Typography } from "../../atoms/Typography/Typography";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Field, Label as HLabel } from "@headlessui/react";
+import { Controller, type ControllerProps } from "react-hook-form";
 
 // cbfl=> check-box-field-label
 // cbft=> check-box-field-typography
@@ -28,10 +29,14 @@ const checkboxFieldVariants = cva(null, {
   },
 });
 
-export type CheckBoxFieldProps = CheckBoxProps & {
+export type CheckBoxFieldProps = Omit<CheckBoxProps, "appearance"> & {
   label: string;
   description?: string | ReactNode;
-} & VariantProps<typeof checkboxFieldVariants>;
+  error?: string;
+  showError?: boolean;
+} & VariantProps<typeof checkboxFieldVariants> & {
+    checkboxAppearance?: CheckBoxProps["appearance"];
+  };
 
 export function CheckboxField({
   id,
@@ -39,19 +44,76 @@ export function CheckboxField({
   size,
   description,
   appearance,
+  checkboxAppearance,
+  showError = false,
+  error,
   ...props
 }: CheckBoxFieldProps) {
+  if (checkboxAppearance === "box") {
+    return (
+      <CheckBox
+        name={id}
+        id={id}
+        size={size}
+        appearance={checkboxAppearance}
+        {...props}
+      >
+        {label}
+      </CheckBox>
+    );
+  }
   return (
     <Field className={checkboxFieldVariants({ size, appearance })}>
       <div>
-        <CheckBox name={id} id={id} size={size} {...props} />
+        <CheckBox
+          name={id}
+          id={id}
+          size={size}
+          appearance={checkboxAppearance}
+          {...props}
+        />
         <HLabel as={Label} className="cbfl" htmlFor={id}>
           {label}
         </HLabel>
       </div>
       <div>
-        <Typography className="leading-none">{description}</Typography>
+        {showError && !!error ? (
+          <Typography className="bg-danger">{error}</Typography>
+        ) : (
+          <Typography className="leading-none">{description}</Typography>
+        )}
       </div>
     </Field>
+  );
+}
+
+export type FormCheckBoxFieldProps = CheckBoxFieldProps & {
+  name: string;
+  controller?: Pick<
+    ControllerProps,
+    "defaultValue" | "disabled" | "rules" | "shouldUnregister"
+  >;
+};
+
+export function FormCheckBoxField({
+  name,
+  controller,
+  ...props
+}: FormCheckBoxFieldProps) {
+  return (
+    <Controller
+      name={name}
+      {...controller}
+      render={({ field, fieldState }) => {
+        return (
+          <CheckboxField
+            {...props}
+            {...field}
+            checked={field.value}
+            error={fieldState.error?.message}
+          />
+        );
+      }}
+    />
   );
 }

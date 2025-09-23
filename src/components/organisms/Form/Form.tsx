@@ -7,6 +7,7 @@ import {
   type DefaultValues,
   type Resolver,
   type UseFormReturn,
+  useFormContext,
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Typography } from "../../atoms/Typography/Typography";
@@ -16,6 +17,7 @@ import {
   type Renderers,
 } from "./renderers";
 import type { PathOf } from "./paths";
+import { useEffect, useState } from "react";
 
 export type Block<T extends FieldValues> =
   | FieldRef<T>
@@ -116,6 +118,27 @@ function renderBlock<T extends FieldValues>(
   const path = field.name as string;
   let renderer;
   switch (field.component) {
+    case "multicheckbox":
+      renderer = renderers.multicheckbox;
+      if (!renderer) {
+        return (
+          <div key={key} className="text-red-600 text-sm">
+            No renderer for "checkbox"
+          </div>
+        );
+      }
+      return renderer({ field, methods, path });
+    case "checkbox":
+      renderer = renderers.checkbox;
+      if (!renderer) {
+        return (
+          <div key={key} className="text-red-600 text-sm">
+            No renderer for "checkbox"
+          </div>
+        );
+      }
+      return renderer({ field, methods, path });
+
     case "input":
       renderer = renderers.input;
       if (!renderer) {
@@ -145,6 +168,24 @@ export function RenderLayout<T extends FieldValues>(props: RenderCtx<T>) {
   return <>{layout.map((blk, i) => renderBlock(blk, props, i))}</>;
 }
 
+function FormValue() {
+  const { watch, getValues } = useFormContext();
+  const [state, setState] = useState<unknown>();
+
+  useEffect(() => {
+    const { unsubscribe } = watch(() => {
+      setState(getValues());
+    });
+    return () => unsubscribe();
+  }, [getValues, watch]);
+
+  return (
+    <pre>
+      <code>{JSON.stringify(state, null, 2)}</code>
+    </pre>
+  );
+}
+
 export function Form<TValues extends FieldValues>({
   schema,
   layout,
@@ -169,6 +210,7 @@ export function Form<TValues extends FieldValues>({
           renderers={effectiveRenderers}
         />
       </form>
+      <FormValue />
     </FormProvider>
   );
 }

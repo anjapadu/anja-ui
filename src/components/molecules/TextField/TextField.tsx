@@ -182,8 +182,10 @@ export function FormTextField({
     <Controller
       {...controller}
       name={name}
-      render={({ field }) => {
-        return <TextField {...props} {...field} />;
+      render={({ field, fieldState }) => {
+        return (
+          <TextField {...props} {...field} error={fieldState.error?.message} />
+        );
       }}
     />
   );
