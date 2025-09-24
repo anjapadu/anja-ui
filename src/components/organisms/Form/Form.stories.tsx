@@ -210,11 +210,17 @@ const accountSettingsLayout: Layout<AccountSettingsFormData> = [
           name: "profileDetails.firstName",
           component: "input",
           label: "First name",
+          inputProps: {
+            placeholder: "Ingresa tu nombre",
+          },
         },
         {
           name: "profileDetails.lastName",
           component: "input",
           label: "Last name",
+          inputProps: {
+            placeholder: "Ingresa tu apellido",
+          },
         },
       ],
       [
@@ -222,22 +228,35 @@ const accountSettingsLayout: Layout<AccountSettingsFormData> = [
           name: "profileDetails.username",
           component: "input",
           label: "Username",
+          inputProps: {
+            placeholder: "Ingresa tu usuario",
+          },
         },
         {
           name: "profileDetails.mobilePhone",
           component: "input",
           label: "Phone number",
+          inputProps: {
+            placeholder: "Ingresa tu teléfono",
+          },
         },
       ],
       {
         name: "profileDetails.biography",
         component: "input",
         label: "Biography",
+        inputProps: {
+          placeholder: "Agrega una biografía.",
+          hint: "(No debe tener menos de 100 caracteres)",
+        },
       },
       {
         component: "checkbox",
-        label: "Acepto los términos y condiciones",
         name: "profileDetails.termsAndConditions",
+        containerClassName: "mt-4",
+        checkboxProps: {
+          label: "Acepto los términos y condiciones",
+        },
       },
     ],
   },
@@ -250,7 +269,7 @@ export const AccountSettings: Story = {
   },
   render: (props) => {
     return (
-      <div className="flex flex-col gap-y-2 bg-[#f1f7fa] p-6 w-[100vw] [--input-color-bg:#f1f7fa]">
+      <div className="flex flex-col gap-y-2 bg-[#f1f7fa] p-6 w-[100vw] [--input-color-bg:#f1f7fa] dark:[--input-color-bg:var(--color-neutral-50)] dark:bg-blue-950">
         <Form
           {...props}
           schema={accountSettingsSchema}

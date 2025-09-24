@@ -5,6 +5,7 @@ import { Typography } from "../../atoms/Typography/Typography";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Field, Label as HLabel } from "@headlessui/react";
 import { Controller, type ControllerProps } from "react-hook-form";
+import { twMerge } from "tailwind-merge";
 
 // cbfl=> check-box-field-label
 // cbft=> check-box-field-typography
@@ -32,6 +33,7 @@ const checkboxFieldVariants = cva(null, {
 export type CheckBoxFieldProps = Omit<CheckBoxProps, "appearance"> & {
   label: string;
   description?: string | ReactNode;
+  containerClassName?: string;
   error?: string;
   showError?: boolean;
 } & VariantProps<typeof checkboxFieldVariants> & {
@@ -44,6 +46,7 @@ export function CheckboxField({
   size,
   description,
   appearance,
+  containerClassName,
   checkboxAppearance,
   showError = false,
   error,
@@ -63,7 +66,12 @@ export function CheckboxField({
     );
   }
   return (
-    <Field className={checkboxFieldVariants({ size, appearance })}>
+    <Field
+      className={twMerge(
+        checkboxFieldVariants({ size, appearance }),
+        containerClassName
+      )}
+    >
       <div>
         <CheckBox
           name={id}

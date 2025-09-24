@@ -18,6 +18,7 @@ import {
 } from "./renderers";
 import type { PathOf } from "./paths";
 import { Fragment, memo, useEffect, useState } from "react";
+import { Button, type ButtonProps } from "../../atoms/Button";
 
 type Section<T extends FieldValues> = {
   title?: string;
@@ -44,6 +45,7 @@ export type FormProps<TValues extends FieldValues> = {
   onSubmit?: SubmitHandler<TValues>;
   mode?: "onSubmit" | "onBlur" | "onChange" | "all";
   renderers?: Renderers<TValues>;
+  showDebugFormValues?: boolean;
 };
 
 function resolverFor<TValues extends FieldValues>(
@@ -154,7 +156,7 @@ function renderBlock<T extends FieldValues>(
     return (
       <div className="flex flex-row flex-1" key={key}>
         <MemoizedDescription title={blk.title} description={blk.description} />
-        <div className="flex flex-col gap-y-6 shadow pb-10 px-8 pt-10 bg-white rounded-xs w-7/12">
+        <div className="flex flex-col gap-y-6 shadow pb-10 px-8 pt-10 bg-white dark:bg-black/20  rounded-xs w-7/12">
           {blk.blocks.map((b, j) => (
             <Fragment key={`${key}-s${j}`}>
               {renderBlock(b, ctx, `${key}-s${j}`)}
@@ -254,7 +256,7 @@ function FormValue() {
   }, [getValues, watch]);
 
   return (
-    <pre>
+    <pre className="mt-10 w-96 flex items-center justify-center text-wrap self-center">
       <code>{JSON.stringify(state, null, 2)}</code>
     </pre>
   );
@@ -266,6 +268,7 @@ export function Form<TValues extends FieldValues>({
   defaultValues,
   onSubmit,
   mode = "onBlur",
+  showDebugFormValues,
   renderers,
 }: FormProps<TValues>) {
   const methods = useForm<TValues, unknown, TValues>({
@@ -284,7 +287,14 @@ export function Form<TValues extends FieldValues>({
           renderers={effectiveRenderers}
         />
       </form>
-      <FormValue />
+      {!showDebugFormValues && <FormValue />}
     </FormProvider>
+  );
+}
+
+export function FormSubmitButton({ ...props }: ButtonProps) {
+  const { formState } = useFormContext();
+  return (
+    <Button {...props} disabled={!formState.isDirty || !formState.isValid} />
   );
 }

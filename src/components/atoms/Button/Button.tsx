@@ -3,7 +3,7 @@ import type { PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";
 import { forwardRef } from "react";
 
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof buttonVariants> & {
     text?: string;
   };

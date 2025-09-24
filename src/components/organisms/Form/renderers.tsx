@@ -25,6 +25,7 @@ type BaseFieldRef<T extends FieldValues> = {
   name: PathOf<T>;
   label?: string;
   colSpan?: number;
+  containerClassName?: string;
 };
 
 export type Direction = "col" | "floating" | "row" | null | undefined;
@@ -146,6 +147,7 @@ export function createDefaultRenderers<T extends FieldValues>({
     },
     checkbox: ({ field, methods, path }) => (
       <FormCheckBoxField
+        containerClassName={field.containerClassName}
         name={path}
         label={field.label ?? ""}
         error={getError(methods, path)}
@@ -154,16 +156,22 @@ export function createDefaultRenderers<T extends FieldValues>({
       />
     ),
     combobox: ({ field, methods, path, direction }) => (
-      <FormComboboxField
+      <FieldGroup
         name={path}
-        id={path}
-        label={field.label}
-        items={field.options || []}
-        error={getError(methods, path)}
-        labelBehaviour={direction === "floating" ? "floating" : "placeholder"}
-        {...defaults?.combobox}
-        {...field.comboProps}
-      />
+        label={field.label ?? ""}
+        direction={direction || defaultDirection}
+      >
+        <FormComboboxField
+          name={path}
+          id={path}
+          label={field.label}
+          items={field.options || []}
+          error={getError(methods, path)}
+          labelBehaviour={direction === "floating" ? "floating" : "placeholder"}
+          {...defaults?.combobox}
+          {...field.comboProps}
+        />
+      </FieldGroup>
     ),
     multicheckbox: ({ field, methods, path }) => {
       const f = field as MultiCheckboxFieldRef<T>;

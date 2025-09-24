@@ -148,7 +148,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         >
           {label}
         </Label>
-        {hint && (
+        {hint && !error && (
           <Typography className="text-xs absolute mt-0.5" color="secondary">
             {hint}
           </Typography>
