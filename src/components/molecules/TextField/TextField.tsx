@@ -3,7 +3,8 @@ import { Input, type InputProps } from "../../atoms/Input/Input";
 import { Label } from "../../atoms/Label/Label";
 import { twMerge } from "tailwind-merge";
 import { Typography } from "../../atoms/Typography/Typography";
-import { Controller, type ControllerProps } from "react-hook-form";
+import { useFormContext, type RegisterOptions } from "react-hook-form";
+import { forwardRef } from "react";
 
 type TextFieldProps = Omit<InputProps, "className"> & {
   label?: string;
@@ -115,78 +116,75 @@ const labelVariants = cva("", {
   ],
   defaultVariants: { inputSize: "sm" },
 });
-export function TextField({
-  inputSize,
-  labelBehavior,
-  label,
-  id,
-  error,
-  hint,
-  className,
-  ...props
-}: TextFieldProps) {
-  const isFloating = (labelBehavior ?? "floating") === "floating";
 
-  return (
-    <div
-      className={twMerge(
-        textFieldVariants({ inputSize, labelBehavior }),
-        className
-      )}
-    >
-      <Input
-        id={id}
-        inputSize={inputSize}
-        appearance={error ? "error" : undefined}
-        placeholder={isFloating ? " " : label}
-        className={inputVariants({ inputSize, labelBehavior })}
-        {...props}
-      />
-      <Label
-        htmlFor={id}
+export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
+  (
+    { inputSize, labelBehavior, label, id, error, hint, className, ...props },
+    ref
+  ) => {
+    const isFloating = (labelBehavior ?? "floating") === "floating";
+
+    return (
+      <div
         className={twMerge(
-          labelVariants({ inputSize, labelBehavior }),
-          !isFloating && "hidden"
+          textFieldVariants({ inputSize, labelBehavior }),
+          className
         )}
       >
-        {label}
-      </Label>
-      {hint && (
-        <Typography className="text-xs absolute mt-0.5" color="secondary">
-          {hint}
-        </Typography>
-      )}
-      {error && (
-        <Typography color="danger" className="text-xs absolute mt-0.5">
-          {error}
-        </Typography>
-      )}
-    </div>
-  );
-}
+        <Input
+          id={id}
+          ref={ref}
+          inputSize={inputSize}
+          appearance={error ? "error" : undefined}
+          placeholder={isFloating ? " " : label}
+          className={inputVariants({ inputSize, labelBehavior })}
+          {...props}
+        />
+        <Label
+          htmlFor={id}
+          className={twMerge(
+            labelVariants({ inputSize, labelBehavior }),
+            !isFloating && "hidden"
+          )}
+        >
+          {label}
+        </Label>
+        {hint && (
+          <Typography className="text-xs absolute mt-0.5" color="secondary">
+            {hint}
+          </Typography>
+        )}
+        {error && (
+          <Typography color="danger" className="text-xs absolute mt-0.5">
+            {error}
+          </Typography>
+        )}
+      </div>
+    );
+  }
+);
+
+TextField.displayName = "TextField";
 
 export type FormTextFieldProps = TextFieldProps & {
   name: string;
-  controller?: Pick<
-    ControllerProps,
-    "defaultValue" | "disabled" | "rules" | "shouldUnregister"
-  >;
+  registerOptions?: RegisterOptions;
 };
 
 export function FormTextField({
   name,
-  controller,
+  registerOptions = {},
   ...props
 }: FormTextFieldProps) {
+  const { register, getFieldState, formState } = useFormContext();
+
+  const { error } = getFieldState(name, formState);
+
   return (
-    <Controller
-      {...controller}
-      name={name}
-      render={({ field, fieldState }) => {
-        return (
-          <TextField {...props} {...field} error={fieldState.error?.message} />
-        );
-      }}
+    <TextField
+      {...props}
+      {...register(name, registerOptions)}
+      error={error?.message}
     />
   );
 }

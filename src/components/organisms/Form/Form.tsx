@@ -17,11 +17,19 @@ import {
   type Renderers,
 } from "./renderers";
 import type { PathOf } from "./paths";
-import { useEffect, useState } from "react";
+import { Fragment, memo, useEffect, useState } from "react";
+
+type Section<T extends FieldValues> = {
+  title?: string;
+  type: "section";
+  description?: string;
+  blocks: Block<T>[];
+};
 
 export type Block<T extends FieldValues> =
   | FieldRef<T>
   | Block<T>[]
+  | Section<T>
   | { title: string }
   | { type: "step"; title: string; content: Block<T>[] }
   | { type: "repeater"; name: PathOf<T>; template: Block<T>[] };
@@ -82,6 +90,54 @@ function Cell({
     <div style={{ gridColumn: `span ${span} / span ${span}` }}>{children}</div>
   );
 }
+function renderArrayBlocks<T extends FieldValues>({
+  blk,
+  key,
+  ctx,
+}: {
+  blk: Block<T>[];
+  ctx: RenderCtx<T>;
+  key: React.Key;
+}) {
+  const cols = blk.length || 1;
+  return (
+    <Row key={key} columns={cols}>
+      {blk.map((col, i) => {
+        const span = (col as FieldRef<T>)?.colSpan ?? 1;
+        const k = `${key}-c${i}`;
+        return (
+          <Cell span={span} key={k}>
+            {renderBlock(col, ctx, `${k}`)}
+          </Cell>
+        );
+      })}
+    </Row>
+  );
+}
+function Description({
+  title,
+  description,
+}: {
+  title?: string;
+  description?: string;
+}) {
+  return (
+    <div className="w-1/3 pr-12">
+      {!!title && (
+        <Typography variant="body" className="font-semibold">
+          {title}
+        </Typography>
+      )}
+      {!!description && (
+        <Typography variant="body" className="leading-none text-xs">
+          {description}
+        </Typography>
+      )}
+    </div>
+  );
+}
+
+const MemoizedDescription = memo(Description);
 
 function renderBlock<T extends FieldValues>(
   blk: Block<T>,
@@ -91,18 +147,21 @@ function renderBlock<T extends FieldValues>(
   const { methods, renderers } = ctx;
 
   if (Array.isArray(blk)) {
-    const cols = blk.length || 1;
+    return renderArrayBlocks({ blk, ctx, key });
+  }
+
+  if ("type" in blk && blk.type === "section") {
     return (
-      <Row key={key} columns={cols}>
-        {blk.map((col, i) => {
-          const span = (col as FieldRef<T>)?.colSpan ?? 1;
-          return (
-            <Cell span={span} key={`${key}-${i}`}>
-              {renderBlock(col, ctx, `${key}-${i}`)}
-            </Cell>
-          );
-        })}
-      </Row>
+      <div className="flex flex-row flex-1" key={key}>
+        <MemoizedDescription title={blk.title} description={blk.description} />
+        <div className="flex flex-col gap-y-6 shadow pb-10 px-8 pt-10 bg-white rounded-xs w-7/12">
+          {blk.blocks.map((b, j) => (
+            <Fragment key={`${key}-s${j}`}>
+              {renderBlock(b, ctx, `${key}-s${j}`)}
+            </Fragment>
+          ))}
+        </div>
+      </div>
     );
   }
 
@@ -116,56 +175,71 @@ function renderBlock<T extends FieldValues>(
 
   const field = blk as FieldRef<T>;
   const path = field.name as string;
-  let renderer;
-  switch (field.component) {
-    case "multicheckbox":
-      renderer = renderers.multicheckbox;
-      if (!renderer) {
-        return (
-          <div key={key} className="text-red-600 text-sm">
-            No renderer for "checkbox"
-          </div>
-        );
-      }
-      return renderer({ field, methods, path });
-    case "checkbox":
-      renderer = renderers.checkbox;
-      if (!renderer) {
-        return (
-          <div key={key} className="text-red-600 text-sm">
-            No renderer for "checkbox"
-          </div>
-        );
-      }
-      return renderer({ field, methods, path });
 
-    case "input":
-      renderer = renderers.input;
-      if (!renderer) {
+  switch (field.component) {
+    case "multicheckbox": {
+      const r = renderers.multicheckbox;
+      if (!r)
+        return (
+          <div key={key} className="text-red-600 text-sm">
+            No renderer for "checkbox"
+          </div>
+        );
+      return <div key={key}>{r({ field, methods, path })}</div>;
+    }
+    case "checkbox": {
+      const r = renderers.checkbox;
+      if (!r)
+        return (
+          <div key={key} className="text-red-600 text-sm">
+            No renderer for "checkbox"
+          </div>
+        );
+      return <div key={key}>{r({ field, methods, path })}</div>;
+    }
+    case "input": {
+      const r = renderers.input;
+      if (!r)
         return (
           <div key={key} className="text-red-600 text-sm">
             No renderer for "input"
           </div>
         );
-      }
-      return renderer({ field, methods, path });
-
-    case "combobox":
-      renderer = renderers.combobox;
-      if (!renderer) {
+      return <div key={key}>{r({ field, methods, path })}</div>;
+    }
+    case "combobox": {
+      const r = renderers.combobox;
+      if (!r)
         return (
           <div key={key} className="text-red-600 text-sm">
             No renderer for "combobox"
           </div>
         );
-      }
-      return renderer({ field, methods, path });
+      return <div key={key}>{r({ field, methods, path })}</div>;
+    }
   }
+}
+
+function keyForBlock<T extends FieldValues>(blk: Block<T>, i: number): string {
+  if (Array.isArray(blk)) return `row-${i}`;
+  if ("type" in blk && blk.type === "section")
+    return `section-${blk.title ?? i}`;
+  if ("title" in blk) return `title-${blk.title}-${i}`;
+  const f = blk as FieldRef<T>;
+  return `field-${f.name}-${i}`;
 }
 
 export function RenderLayout<T extends FieldValues>(props: RenderCtx<T>) {
   const { layout } = props;
-  return <div className="gap-y-8 flex flex-col">{layout.map((blk, i) => renderBlock(blk, props, i))}</div>;
+  return (
+    <div className="gap-y-6 flex flex-col">
+      {layout.map((blk, i) => (
+        <Fragment key={keyForBlock(blk, i)}>
+          {renderBlock(blk, props, keyForBlock(blk, i))}
+        </Fragment>
+      ))}
+    </div>
+  );
 }
 
 function FormValue() {

@@ -12,11 +12,11 @@ export type InputProps = HInputProps &
   };
 
 const inputVariants = cva(
-  "px-2 border-border border box-border text-font-primary placeholder-font-secondary w-full leading-0 focus-visible:outline-1",
+  "px-2 border-border border box-border text-font-primary placeholder-font-secondary w-full leading-0 focus-visible:outline-1 bg-[var(--input-color-bg)]",
   {
     variants: {
       appearance: {
-        default: "outline-neutral-300 disabled:opacity-75",
+        default: "outline-neutral-300 disabled:opacity-75 border-neutral-200",
         error: "outline-danger border-danger",
         success: "outline-success border-success",
       },

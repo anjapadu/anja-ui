@@ -16,6 +16,7 @@ const fieldGroupVariants = cva("flex flex-1", {
 export type FieldGroupProps = VariantProps<typeof fieldGroupVariants> & {
   name?: string;
   label: string;
+  children?: React.ReactNode;
 };
 
 export function FieldGroup({ direction, label }: FieldGroupProps) {

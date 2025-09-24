@@ -103,6 +103,7 @@ type RendererDefaults = {
   combobox?: Omit<FormComboBoxFieldProps, "name" | "options">;
   checkbox?: Omit<FormCheckBoxFieldProps, "name">;
   multicheckbox?: Omit<FormMultiCheckboxFieldProps, "name" | "options">;
+  
 };
 
 export function createDefaultRenderers<T extends FieldValues>(

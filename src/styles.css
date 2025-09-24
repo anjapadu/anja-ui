@@ -102,6 +102,8 @@
 :root {
   /* base form field values  start*/
 
+  --input-color-bg: white;
+
   --field-padding-x: --spacing(2);
 
   --field-sm: --spacing(10);

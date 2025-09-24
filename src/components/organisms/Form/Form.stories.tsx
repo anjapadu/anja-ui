@@ -35,7 +35,7 @@ const schema = z.object({
   contacts: z.array(
     z.object({
       fullName: z.string(),
-      email: z.string().email(),
+      email: z.email(),
       role: z.enum(["Legal", "Finanzas", "Técnico"]),
     })
   ),
@@ -165,6 +165,90 @@ export const OnePageForm: Story = {
           schema={schema}
           layout={layout}
           renderers={createDefaultRenderers<FormData>({
+            input: { labelBehavior: "floating" },
+          })}
+        />
+      </div>
+    );
+  },
+};
+
+const accountSettingsSchema = z.object({
+  personalInformation: z.object({
+    email: z.email(),
+    country: z.string(),
+    prefferedLanguage: z.string(),
+  }),
+  profileDetails: z.object({
+    firstName: z.string(),
+    lastName: z.string(),
+    username: z.string(),
+    mobilePhone: z.string(),
+    biography: z.string().min(100).max(1000),
+  }),
+  notifications: z.object({
+    exclusiveProducts: z.boolean().default(false),
+    news: z.boolean().default(false),
+    dailyMessage: z.boolean().default(false),
+    weeklySummary: z.boolean().default(false),
+  }),
+});
+export type AccountSettingsFormData = z.infer<typeof accountSettingsSchema>;
+
+const accountSettingsLayout: Layout<AccountSettingsFormData> = [
+  {
+    type: "section",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget eros nibh. Fusce faucibus lacus quis sem egestas, fringilla eleifend massa lacinia. Sed a ante tortor",
+    title: "Profile Details",
+    blocks: [
+      [
+        {
+          name: "profileDetails.firstName",
+          component: "input",
+          label: "First name",
+        },
+        {
+          name: "profileDetails.lastName",
+          component: "input",
+          label: "Last name",
+        },
+      ],
+      [
+        {
+          name: "profileDetails.username",
+          component: "input",
+          label: "Username",
+        },
+        {
+          name: "profileDetails.mobilePhone",
+          component: "input",
+          label: "Phone number",
+        },
+      ],
+      {
+        name: "profileDetails.biography",
+        component: "input",
+        label: "Biography",
+      },
+    ],
+  },
+];
+
+export const AccountSettings: Story = {
+  args: {
+    schema,
+    layout,
+  },
+  render: (props) => {
+    return (
+      <div className="flex flex-col gap-y-2 bg-[#f1f7fa] p-6 w-[100vw] [--input-color-bg:#f1f7fa]">
+        <Form<AccountSettingsFormData>
+          {...props}
+          schema={accountSettingsSchema}
+          // formGroup=""
+          layout={accountSettingsLayout}
+          renderers={createDefaultRenderers<AccountSettingsFormData>({
             input: { labelBehavior: "floating" },
           })}
         />
