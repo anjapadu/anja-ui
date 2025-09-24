@@ -287,7 +287,7 @@ export function Form<TValues extends FieldValues>({
           renderers={effectiveRenderers}
         />
       </form>
-      {!showDebugFormValues && <FormValue />}
+      {showDebugFormValues && <FormValue />}
     </FormProvider>
   );
 }
