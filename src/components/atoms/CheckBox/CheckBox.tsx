@@ -30,7 +30,7 @@ const checkboxVariants = cva("cursor-pointer select-none", {
 const focusCircleVariants = cva(
   "size-0 pointer-events-none absolute top-1/2 left-1/2 \
   -translate-x-1/2 -translate-y-1/2 transform-gpu \
-  rounded-full bg-primary-100 -z-10 dark:opacity-10 \
+  rounded-full bg-primary-100/80 -z-10 dark:bg-primary-100/10 \
   transition-all",
   {
     variants: {
@@ -68,38 +68,40 @@ export function CheckBox({
   ...props
 }: PropsWithChildren<CheckBoxProps>) {
   return (
-    <HCheckbox
-      checked={checked}
-      onChange={onChange}
-      {...props}
-      className={twMerge(
-        checkboxVariants({
-          size,
-          appearance,
-        }),
-        className
-      )}
-    >
-      {hoverBackground && (
-        <div className={twMerge(focusCircleVariants({ size, appearance }))} />
-      )}
+    <div className="relative isolate">
+      <HCheckbox
+        checked={checked}
+        onChange={onChange}
+        {...props}
+        className={twMerge(
+          checkboxVariants({
+            size,
+            appearance,
+          }),
+          className
+        )}
+      >
+        {hoverBackground && (
+          <div className={twMerge(focusCircleVariants({ size, appearance }))} />
+        )}
 
-      {appearance === "box" ? (
-        children
-      ) : (
-        <svg
-          className="stroke-white opacity-0 group-hover:opacity-100 dark:group-hover:opacity-50 group-data-checked:opacity-100"
-          viewBox="0 0 14 14"
-          fill="none"
-        >
-          <path
-            d="M3 8L6 11L11 3.5"
-            strokeWidth={2}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      )}
-    </HCheckbox>
+        {appearance === "box" ? (
+          children
+        ) : (
+          <svg
+            className="stroke-white opacity-0 group-hover:opacity-100 dark:group-hover:opacity-50 group-data-checked:opacity-100"
+            viewBox="0 0 14 14"
+            fill="none"
+          >
+            <path
+              d="M3 8L6 11L11 3.5"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        )}
+      </HCheckbox>
+    </div>
   );
 }
