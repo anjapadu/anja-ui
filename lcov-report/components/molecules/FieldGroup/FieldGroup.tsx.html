@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/29</span>
+                <span class='fraction'>0/30</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/29</span>
+                <span class='fraction'>0/30</span>
             </div>
         
             
@@ -102,9 +102,26 @@
 <a name='L37'></a><a href='#L37'>37</a>
 <a name='L38'></a><a href='#L38'>38</a>
 <a name='L39'></a><a href='#L39'>39</a>
-<a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -116,33 +133,17 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import { cva, type VariantProps } from "class-variance-authority";<span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ></span></span></span>
-<span class="cstat-no" title="statement not covered" >import { TextField } from "../TextField";</span>
 <span class="cstat-no" title="statement not covered" >import { Label } from "../../atoms/Label";</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >const fieldGroupVariants = cva("flex flex-1", {</span>
@@ -162,21 +163,23 @@ export type FieldGroupProps = VariantProps&lt;typeof fieldGroupVariants&gt; &amp
   children?: React.ReactNode;
 };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >export function FieldGroup({ direction, label }: FieldGroupProps) {</span>
+<span class="cstat-no" title="statement not covered" >export function FieldGroup({</span>
+<span class="cstat-no" title="statement not covered" >  direction,</span>
+<span class="cstat-no" title="statement not covered" >  label,</span>
+<span class="cstat-no" title="statement not covered" >  children,</span>
+<span class="cstat-no" title="statement not covered" >  name,</span>
+<span class="cstat-no" title="statement not covered" >}: FieldGroupProps) {</span>
 <span class="cstat-no" title="statement not covered" >  const isFloating = direction === "floating";</span>
 <span class="cstat-no" title="statement not covered" >  return (</span>
 <span class="cstat-no" title="statement not covered" >    &lt;div className={fieldGroupVariants({ direction })}&gt;</span>
 <span class="cstat-no" title="statement not covered" >      {!isFloating &amp;&amp; (</span>
 <span class="cstat-no" title="statement not covered" >        &lt;div className="flex-1"&gt;</span>
-<span class="cstat-no" title="statement not covered" >          &lt;Label&gt;{label}&lt;/Label&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;Label className="text-xs font-medium" htmlFor={name}&gt;</span>
+<span class="cstat-no" title="statement not covered" >            {label}</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/Label&gt;</span>
 <span class="cstat-no" title="statement not covered" >        &lt;/div&gt;</span>
       )}
-<span class="cstat-no" title="statement not covered" >      &lt;div className="flex-1"&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;TextField</span>
-<span class="cstat-no" title="statement not covered" >          label={label}</span>
-<span class="cstat-no" title="statement not covered" >          labelBehavior={isFloating ? "floating" : "placeholder"}</span>
-<span class="cstat-no" title="statement not covered" >        /&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;div className="flex-1"&gt;{children}&lt;/div&gt;</span>
 <span class="cstat-no" title="statement not covered" >    &lt;/div&gt;</span>
   );
 <span class="cstat-no" title="statement not covered" >}</span>
@@ -187,7 +190,7 @@ export type FieldGroupProps = VariantProps&lt;typeof fieldGroupVariants&gt; &amp
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-09-24T02:09:43.614Z
+                at 2025-09-24T14:36:00.452Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
