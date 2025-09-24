@@ -17,6 +17,7 @@ import {
   FormMultiCheckboxField,
   type FormMultiCheckboxFieldProps,
 } from "../../molecules/MultiCheckBoxField";
+import { FieldGroup } from "../../molecules/FieldGroup";
 
 export type ComponentKind = "input" | "combobox" | "checkbox" | "multicheckbox";
 
@@ -25,6 +26,8 @@ type BaseFieldRef<T extends FieldValues> = {
   label?: string;
   colSpan?: number;
 };
+
+export type Direction = "col" | "floating" | "row" | null | undefined;
 
 export type InputFieldRef<T extends FieldValues> = BaseFieldRef<T> & {
   component: "input";
@@ -59,6 +62,7 @@ export type FieldPropsBase<T extends FieldValues, F extends FieldRef<T>> = {
   field: F;
   methods: UseFormReturn<T>;
   path: string;
+  direction?: Direction;
 };
 
 export type FieldPropsFor<
@@ -103,22 +107,43 @@ type RendererDefaults = {
   combobox?: Omit<FormComboBoxFieldProps, "name" | "options">;
   checkbox?: Omit<FormCheckBoxFieldProps, "name">;
   multicheckbox?: Omit<FormMultiCheckboxFieldProps, "name" | "options">;
-  
 };
 
-export function createDefaultRenderers<T extends FieldValues>(
-  defaults?: RendererDefaults
-): Renderers<T> {
+export function createDefaultRenderers<T extends FieldValues>({
+  defaultDirection,
+  defaults,
+}: {
+  defaults?: RendererDefaults;
+  defaultDirection?: Direction;
+}): Renderers<T> {
   return {
-    input: ({ field, methods, path }) => (
-      <FormTextField
-        name={path}
-        label={field.label}
-        error={getError(methods, path)}
-        {...defaults?.input}
-        {...field.inputProps}
-      />
-    ),
+    input: ({ field, methods, path, direction }) => {
+      const labelBehaviour =
+        direction || defaultDirection === "floating"
+          ? "floating"
+          : "placeholder";
+      return (
+        <FieldGroup
+          name={path}
+          label={field.label ?? ""}
+          direction={direction || defaultDirection}
+        >
+          <FormTextField
+            name={path}
+            id={path}
+            label={field.label}
+            error={getError(methods, path)}
+            {...field.inputProps}
+            {...defaults?.input}
+            labelBehavior={
+              labelBehaviour ||
+              defaults?.input?.labelBehavior ||
+              field.inputProps?.labelBehavior
+            }
+          />
+        </FieldGroup>
+      );
+    },
     checkbox: ({ field, methods, path }) => (
       <FormCheckBoxField
         name={path}
@@ -128,13 +153,14 @@ export function createDefaultRenderers<T extends FieldValues>(
         {...field.checkboxProps}
       />
     ),
-    combobox: ({ field, methods, path }) => (
+    combobox: ({ field, methods, path, direction }) => (
       <FormComboboxField
         name={path}
         id={path}
         label={field.label}
         items={field.options || []}
         error={getError(methods, path)}
+        labelBehaviour={direction === "floating" ? "floating" : "placeholder"}
         {...defaults?.combobox}
         {...field.comboProps}
       />
@@ -142,14 +168,16 @@ export function createDefaultRenderers<T extends FieldValues>(
     multicheckbox: ({ field, methods, path }) => {
       const f = field as MultiCheckboxFieldRef<T>;
       return (
-        <FormMultiCheckboxField
-          name={path}
-          label={f.label ?? ""}
-          options={f.options}
-          error={getError(methods, path)}
-          {...defaults?.multicheckbox}
-          {...f.multiCheckboxProps}
-        />
+        <FieldGroup name="path" label={f.label ?? ""}>
+          <FormMultiCheckboxField
+            name={path}
+            label={f.label ?? ""}
+            options={f.options}
+            error={getError(methods, path)}
+            {...defaults?.multicheckbox}
+            {...f.multiCheckboxProps}
+          />
+        </FieldGroup>
       );
     },
   };

@@ -87,7 +87,7 @@ describe("ComboboxField (virtual render-prop coverage)", () => {
         id="fruit"
         label="Fruit"
         items={items}
-        variant="placeholder"
+        labelBehaviour="placeholder"
         value={null}
         onChange={() => {}}
         virtualized

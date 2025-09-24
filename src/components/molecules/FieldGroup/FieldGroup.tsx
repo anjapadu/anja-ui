@@ -1,5 +1,4 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import { TextField } from "../TextField";
 import { Label } from "../../atoms/Label";
 
 const fieldGroupVariants = cva("flex flex-1", {
@@ -19,21 +18,23 @@ export type FieldGroupProps = VariantProps<typeof fieldGroupVariants> & {
   children?: React.ReactNode;
 };
 
-export function FieldGroup({ direction, label }: FieldGroupProps) {
+export function FieldGroup({
+  direction,
+  label,
+  children,
+  name,
+}: FieldGroupProps) {
   const isFloating = direction === "floating";
   return (
     <div className={fieldGroupVariants({ direction })}>
       {!isFloating && (
         <div className="flex-1">
-          <Label>{label}</Label>
+          <Label className="text-xs font-medium" htmlFor={name}>
+            {label}
+          </Label>
         </div>
       )}
-      <div className="flex-1">
-        <TextField
-          label={label}
-          labelBehavior={isFloating ? "floating" : "placeholder"}
-        />
-      </div>
+      <div className="flex-1">{children}</div>
     </div>
   );
 }

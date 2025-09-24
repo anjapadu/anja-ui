@@ -165,7 +165,9 @@ export const OnePageForm: Story = {
           schema={schema}
           layout={layout}
           renderers={createDefaultRenderers<FormData>({
-            input: { labelBehavior: "floating" },
+            defaults: {
+              input: { labelBehavior: "floating" },
+            },
           })}
         />
       </div>
@@ -185,6 +187,7 @@ const accountSettingsSchema = z.object({
     username: z.string(),
     mobilePhone: z.string(),
     biography: z.string().min(100).max(1000),
+    termsAndConditions: z.boolean(),
   }),
   notifications: z.object({
     exclusiveProducts: z.boolean().default(false),
@@ -231,6 +234,11 @@ const accountSettingsLayout: Layout<AccountSettingsFormData> = [
         component: "input",
         label: "Biography",
       },
+      {
+        component: "checkbox",
+        label: "Acepto los términos y condiciones",
+        name: "profileDetails.termsAndConditions",
+      },
     ],
   },
 ];
@@ -246,10 +254,12 @@ export const AccountSettings: Story = {
         <Form
           {...props}
           schema={accountSettingsSchema}
-          // formGroup=""
           layout={accountSettingsLayout}
           renderers={createDefaultRenderers({
-            input: { labelBehavior: "floating" },
+            defaultDirection: "col",
+            defaults: {
+              input: { labelBehavior: "floating" },
+            },
           })}
         />
       </div>

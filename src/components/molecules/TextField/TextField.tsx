@@ -123,7 +123,6 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     ref
   ) => {
     const isFloating = (labelBehavior ?? "floating") === "floating";
-
     return (
       <div
         className={twMerge(

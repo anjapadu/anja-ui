@@ -182,7 +182,7 @@ function renderBlock<T extends FieldValues>(
       if (!r)
         return (
           <div key={key} className="text-red-600 text-sm">
-            No renderer for "checkbox"
+            No renderer for "multicheckbox"
           </div>
         );
       return <div key={key}>{r({ field, methods, path })}</div>;
@@ -274,7 +274,7 @@ export function Form<TValues extends FieldValues>({
     mode,
   });
   const effectiveRenderers =
-    (renderers as Renderers<TValues>) ?? createDefaultRenderers<TValues>();
+    (renderers as Renderers<TValues>) ?? createDefaultRenderers<TValues>({});
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit((vals) => onSubmit?.(vals))}>

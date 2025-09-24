@@ -20,15 +20,15 @@ import { Controller, type ControllerProps } from "react-hook-form";
 
 const fieldWrapperVariants = cva(null, {
   variants: {
-    variant: { floating: "relative", placeholder: "" },
+    labelBehaviour: { floating: "relative", placeholder: "" },
     size: { sm: null, md: null, lg: null },
   },
-  defaultVariants: { variant: "floating", size: "sm" },
+  defaultVariants: { labelBehaviour: "floating", size: "sm" },
 });
 
 const labelVariants = cva(null, {
   variants: {
-    variant: {
+    labelBehaviour: {
       floating:
         "pointer-events-none absolute transition-all text-font-secondary \
         left-[0.55rem] top-1/2 -translate-y-1/2 \
@@ -39,7 +39,7 @@ const labelVariants = cva(null, {
   },
   compoundVariants: [
     {
-      variant: "floating",
+      labelBehaviour: "floating",
       size: "sm",
       class: `
         peer-placeholder-shown:text-sm
@@ -50,7 +50,7 @@ const labelVariants = cva(null, {
       `,
     },
     {
-      variant: "floating",
+      labelBehaviour: "floating",
       size: "md",
       class: `
         peer-placeholder-shown:text-base
@@ -61,7 +61,7 @@ const labelVariants = cva(null, {
       `,
     },
     {
-      variant: "floating",
+      labelBehaviour: "floating",
       size: "lg",
       class: `
         peer-placeholder-shown:text-lg
@@ -72,14 +72,14 @@ const labelVariants = cva(null, {
       `,
     },
   ],
-  defaultVariants: { size: "sm", variant: "floating" },
+  defaultVariants: { size: "sm", labelBehaviour: "floating" },
 });
 
 const comboboxInputVariants = cva(
   "peer w-full px-2 border border-border box-border text-font-primary placeholder-font-secondary",
   {
     variants: {
-      variant: {
+      labelBehaviour: {
         floating: "peer",
         placeholder: null,
       },
@@ -87,24 +87,24 @@ const comboboxInputVariants = cva(
     },
     compoundVariants: [
       {
-        variant: "floating",
+        labelBehaviour: "floating",
         size: "sm",
         class: `pt-3`,
       },
       {
-        variant: "floating",
+        labelBehaviour: "floating",
         size: "md",
         class: "pt-4",
       },
       {
-        variant: "floating",
+        labelBehaviour: "floating",
         size: "lg",
         class: "pt-5",
       },
     ],
     defaultVariants: {
       size: "sm",
-      variant: "floating",
+      labelBehaviour: "floating",
     },
   }
 );
@@ -177,12 +177,12 @@ export type ComboboxFieldProps = SingleProps & {
 
   virtualized?: boolean;
   virtualThreshold?: number;
-} & Pick<FieldCva, "variant" | "size">;
+} & Pick<FieldCva, "labelBehaviour" | "size">;
 
 export function ComboboxField({
   id,
   label,
-  variant = "floating",
+  labelBehaviour = "floating",
   size = "sm",
   items,
   value,
@@ -208,7 +208,7 @@ export function ComboboxField({
     return items.filter((item) => re.test(item.label));
   }, [items, query, customFilter]);
 
-  const isFloating = variant === "floating";
+  const isFloating = labelBehaviour === "floating";
 
   const displayValue = (val: Option | Option[] | null) =>
     Array.isArray(val) ? val.map((v) => v.label).join(", ") : val?.label ?? "";
@@ -218,7 +218,10 @@ export function ComboboxField({
   const virtualProp = useVirtual ? { options: filtered } : undefined;
   return (
     <div
-      className={twMerge(fieldWrapperVariants({ variant, size }), className)}
+      className={twMerge(
+        fieldWrapperVariants({ labelBehaviour, size }),
+        className
+      )}
     >
       <Combobox<Option | null>
         value={value ?? null}
@@ -238,7 +241,7 @@ export function ComboboxField({
           className={twMerge(
             comboboxInputVariants({
               size,
-              variant,
+              labelBehaviour,
             })
           )}
           inputSize={size}
@@ -250,7 +253,7 @@ export function ComboboxField({
           <Label
             htmlFor={id}
             className={twMerge(
-              labelVariants({ size, variant }),
+              labelVariants({ size, labelBehaviour }),
               !isFloating && "hidden"
             )}
           >

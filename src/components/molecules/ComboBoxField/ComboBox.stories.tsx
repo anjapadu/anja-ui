@@ -33,7 +33,7 @@ function ComboboxPerson(
         items={items}
         value={value || null}
         getLabel={(p) => p.label}
-        variant="floating"
+        labelBehaviour="floating"
         {...props}
         id="assignee"
         onChange={setValue}
@@ -54,7 +54,7 @@ const meta = {
       control: { type: "radio" },
       options: ["sm", "md", "lg"],
     },
-    variant: {
+    labelBehaviour: {
       control: { type: "radio" },
       options: ["floating", "placeholder"],
     },
@@ -72,7 +72,7 @@ const meta = {
   args: {
     label: "Assignee",
     size: "sm",
-    variant: "floating",
+    labelBehaviour: "floating",
     virtualized: true,
     virtualThreshold: 200,
     placeholder: "Select…",
@@ -87,7 +87,7 @@ type Story = StoryObj<typeof meta>;
 export const FloatingLabel: Story = {
   name: "Floating label",
   args: {
-    variant: "floating",
+    labelBehaviour: "floating",
     size: "sm",
     id: "",
   },
@@ -96,7 +96,7 @@ export const FloatingLabel: Story = {
 export const PlaceholderVariant: Story = {
   name: "Placeholder variant",
   args: {
-    variant: "placeholder",
+    labelBehaviour: "placeholder",
     size: "sm",
     label: "Assignee",
     placeholder: "Search person…",
