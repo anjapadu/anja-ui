@@ -60,7 +60,9 @@ describe("TextField", () => {
         error="Required"
       />
     );
-    expect(screen.getByText("Use at least 8 characters")).toBeInTheDocument();
+    expect(
+      screen.queryByText("Use at least 8 characters")
+    ).not.toBeInTheDocument();
     expect(screen.getByText("Required")).toBeInTheDocument();
   });
 
