@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/80</span>
+                <span class='fraction'>0/82</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/80</span>
+                <span class='fraction'>0/82</span>
             </div>
         
             
@@ -168,7 +168,9 @@
 <a name='L103'></a><a href='#L103'>103</a>
 <a name='L104'></a><a href='#L104'>104</a>
 <a name='L105'></a><a href='#L105'>105</a>
-<a name='L106'></a><a href='#L106'>106</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -249,27 +251,29 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -305,7 +309,7 @@ import type { PropsWithChildren } from "react";
 <span class="cstat-no" title="statement not covered" >const focusCircleVariants = cva(</span>
 <span class="cstat-no" title="statement not covered" >  "size-0 pointer-events-none absolute top-1/2 left-1/2 \</span>
   -translate-x-1/2 -translate-y-1/2 transform-gpu \
-  rounded-full bg-primary-100 -z-10 dark:opacity-10 \
+  rounded-full bg-primary-100/80 -z-10 dark:bg-primary-100/10 \
   transition-all",
 <span class="cstat-no" title="statement not covered" >  {</span>
 <span class="cstat-no" title="statement not covered" >    variants: {</span>
@@ -343,39 +347,41 @@ export type CheckBoxProps = VariantProps&lt;typeof checkboxVariants&gt; &amp;
 <span class="cstat-no" title="statement not covered" >  ...props</span>
 <span class="cstat-no" title="statement not covered" >}: PropsWithChildren&lt;CheckBoxProps&gt;) {</span>
 <span class="cstat-no" title="statement not covered" >  return (</span>
-<span class="cstat-no" title="statement not covered" >    &lt;HCheckbox</span>
-<span class="cstat-no" title="statement not covered" >      checked={checked}</span>
-<span class="cstat-no" title="statement not covered" >      onChange={onChange}</span>
-<span class="cstat-no" title="statement not covered" >      {...props}</span>
-<span class="cstat-no" title="statement not covered" >      className={twMerge(</span>
-<span class="cstat-no" title="statement not covered" >        checkboxVariants({</span>
-<span class="cstat-no" title="statement not covered" >          size,</span>
-<span class="cstat-no" title="statement not covered" >          appearance,</span>
-<span class="cstat-no" title="statement not covered" >        }),</span>
-<span class="cstat-no" title="statement not covered" >        className</span>
-<span class="cstat-no" title="statement not covered" >      )}</span>
-    &gt;
-<span class="cstat-no" title="statement not covered" >      {hoverBackground &amp;&amp; (</span>
-<span class="cstat-no" title="statement not covered" >        &lt;div className={twMerge(focusCircleVariants({ size, appearance }))} /&gt;</span>
-      )}
+<span class="cstat-no" title="statement not covered" >    &lt;div className="relative isolate"&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;HCheckbox</span>
+<span class="cstat-no" title="statement not covered" >        checked={checked}</span>
+<span class="cstat-no" title="statement not covered" >        onChange={onChange}</span>
+<span class="cstat-no" title="statement not covered" >        {...props}</span>
+<span class="cstat-no" title="statement not covered" >        className={twMerge(</span>
+<span class="cstat-no" title="statement not covered" >          checkboxVariants({</span>
+<span class="cstat-no" title="statement not covered" >            size,</span>
+<span class="cstat-no" title="statement not covered" >            appearance,</span>
+<span class="cstat-no" title="statement not covered" >          }),</span>
+<span class="cstat-no" title="statement not covered" >          className</span>
+<span class="cstat-no" title="statement not covered" >        )}</span>
+      &gt;
+<span class="cstat-no" title="statement not covered" >        {hoverBackground &amp;&amp; (</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div className={twMerge(focusCircleVariants({ size, appearance }))} /&gt;</span>
+        )}
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      {appearance === "box" ? (</span>
-<span class="cstat-no" title="statement not covered" >        children</span>
-      ) : (
-<span class="cstat-no" title="statement not covered" >        &lt;svg</span>
-<span class="cstat-no" title="statement not covered" >          className="stroke-white opacity-0 group-hover:opacity-100 dark:group-hover:opacity-50 group-data-checked:opacity-100"</span>
-<span class="cstat-no" title="statement not covered" >          viewBox="0 0 14 14"</span>
-<span class="cstat-no" title="statement not covered" >          fill="none"</span>
-        &gt;
-<span class="cstat-no" title="statement not covered" >          &lt;path</span>
-<span class="cstat-no" title="statement not covered" >            d="M3 8L6 11L11 3.5"</span>
-<span class="cstat-no" title="statement not covered" >            strokeWidth={2}</span>
-<span class="cstat-no" title="statement not covered" >            strokeLinecap="round"</span>
-<span class="cstat-no" title="statement not covered" >            strokeLinejoin="round"</span>
-<span class="cstat-no" title="statement not covered" >          /&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;/svg&gt;</span>
-      )}
-<span class="cstat-no" title="statement not covered" >    &lt;/HCheckbox&gt;</span>
+<span class="cstat-no" title="statement not covered" >        {appearance === "box" ? (</span>
+<span class="cstat-no" title="statement not covered" >          children</span>
+        ) : (
+<span class="cstat-no" title="statement not covered" >          &lt;svg</span>
+<span class="cstat-no" title="statement not covered" >            className="stroke-white opacity-0 group-hover:opacity-100 dark:group-hover:opacity-50 group-data-checked:opacity-100"</span>
+<span class="cstat-no" title="statement not covered" >            viewBox="0 0 14 14"</span>
+<span class="cstat-no" title="statement not covered" >            fill="none"</span>
+          &gt;
+<span class="cstat-no" title="statement not covered" >            &lt;path</span>
+<span class="cstat-no" title="statement not covered" >              d="M3 8L6 11L11 3.5"</span>
+<span class="cstat-no" title="statement not covered" >              strokeWidth={2}</span>
+<span class="cstat-no" title="statement not covered" >              strokeLinecap="round"</span>
+<span class="cstat-no" title="statement not covered" >              strokeLinejoin="round"</span>
+<span class="cstat-no" title="statement not covered" >            /&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/svg&gt;</span>
+        )}
+<span class="cstat-no" title="statement not covered" >      &lt;/HCheckbox&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;/div&gt;</span>
   );
 <span class="cstat-no" title="statement not covered" >}</span>
 &nbsp;</pre></td></tr></table></pre>
@@ -385,7 +391,7 @@ export type CheckBoxProps = VariantProps&lt;typeof checkboxVariants&gt; &amp;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-09-24T14:36:00.452Z
+                at 2025-09-24T15:22:18.298Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
