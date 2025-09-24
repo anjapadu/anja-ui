@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/193</span>
+                <span class='fraction'>0/200</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/193</span>
+                <span class='fraction'>0/200</span>
             </div>
         
             
@@ -353,7 +353,17 @@
 <a name='L288'></a><a href='#L288'>288</a>
 <a name='L289'></a><a href='#L289'>289</a>
 <a name='L290'></a><a href='#L290'>290</a>
-<a name='L291'></a><a href='#L291'>291</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L291'></a><a href='#L291'>291</a>
+<a name='L292'></a><a href='#L292'>292</a>
+<a name='L293'></a><a href='#L293'>293</a>
+<a name='L294'></a><a href='#L294'>294</a>
+<a name='L295'></a><a href='#L295'>295</a>
+<a name='L296'></a><a href='#L296'>296</a>
+<a name='L297'></a><a href='#L297'>297</a>
+<a name='L298'></a><a href='#L298'>298</a>
+<a name='L299'></a><a href='#L299'>299</a>
+<a name='L300'></a><a href='#L300'>300</a>
+<a name='L301'></a><a href='#L301'>301</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -373,6 +383,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -615,6 +627,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -637,6 +652,11 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -663,6 +683,7 @@
 } from "./renderers";
 import type { PathOf } from "./paths";
 <span class="cstat-no" title="statement not covered" >import { Fragment, memo, useEffect, useState } from "react";</span>
+<span class="cstat-no" title="statement not covered" >import { Button, type ButtonProps } from "../../atoms/Button";</span>
 &nbsp;
 type Section&lt;T extends FieldValues&gt; = {
   title?: string;
@@ -689,6 +710,7 @@ export type FormProps&lt;TValues extends FieldValues&gt; = {
   onSubmit?: SubmitHandler&lt;TValues&gt;;
   mode?: "onSubmit" | "onBlur" | "onChange" | "all";
   renderers?: Renderers&lt;TValues&gt;;
+  showDebugFormValues?: boolean;
 };
 &nbsp;
 <span class="cstat-no" title="statement not covered" >function resolverFor&lt;TValues extends FieldValues&gt;(</span>
@@ -799,7 +821,7 @@ type RenderCtx&lt;T extends FieldValues&gt; = {
 <span class="cstat-no" title="statement not covered" >    return (</span>
 <span class="cstat-no" title="statement not covered" >      &lt;div className="flex flex-row flex-1" key={key}&gt;</span>
 <span class="cstat-no" title="statement not covered" >        &lt;MemoizedDescription title={blk.title} description={blk.description} /&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;div className="flex flex-col gap-y-6 shadow pb-10 px-8 pt-10 bg-white rounded-xs w-7/12"&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;div className="flex flex-col gap-y-6 shadow pb-10 px-8 pt-10 bg-white dark:bg-black/20  rounded-xs w-7/12"&gt;</span>
 <span class="cstat-no" title="statement not covered" >          {blk.blocks.map((b, j) =&gt; (</span>
 <span class="cstat-no" title="statement not covered" >            &lt;Fragment key={`${key}-s${j}`}&gt;</span>
 <span class="cstat-no" title="statement not covered" >              {renderBlock(b, ctx, `${key}-s${j}`)}</span>
@@ -899,7 +921,7 @@ type RenderCtx&lt;T extends FieldValues&gt; = {
 <span class="cstat-no" title="statement not covered" >  }, [getValues, watch]);</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  return (</span>
-<span class="cstat-no" title="statement not covered" >    &lt;pre&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;pre className="mt-10 w-96 flex items-center justify-center text-wrap self-center"&gt;</span>
 <span class="cstat-no" title="statement not covered" >      &lt;code&gt;{JSON.stringify(state, null, 2)}&lt;/code&gt;</span>
 <span class="cstat-no" title="statement not covered" >    &lt;/pre&gt;</span>
   );
@@ -911,6 +933,7 @@ type RenderCtx&lt;T extends FieldValues&gt; = {
 <span class="cstat-no" title="statement not covered" >  defaultValues,</span>
 <span class="cstat-no" title="statement not covered" >  onSubmit,</span>
 <span class="cstat-no" title="statement not covered" >  mode = "onBlur",</span>
+<span class="cstat-no" title="statement not covered" >  showDebugFormValues,</span>
 <span class="cstat-no" title="statement not covered" >  renderers,</span>
 <span class="cstat-no" title="statement not covered" >}: FormProps&lt;TValues&gt;) {</span>
 <span class="cstat-no" title="statement not covered" >  const methods = useForm&lt;TValues, unknown, TValues&gt;({</span>
@@ -929,8 +952,15 @@ type RenderCtx&lt;T extends FieldValues&gt; = {
 <span class="cstat-no" title="statement not covered" >          renderers={effectiveRenderers}</span>
 <span class="cstat-no" title="statement not covered" >        /&gt;</span>
 <span class="cstat-no" title="statement not covered" >      &lt;/form&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;FormValue /&gt;</span>
+<span class="cstat-no" title="statement not covered" >      {!showDebugFormValues &amp;&amp; &lt;FormValue /&gt;}</span>
 <span class="cstat-no" title="statement not covered" >    &lt;/FormProvider&gt;</span>
+  );
+<span class="cstat-no" title="statement not covered" >}</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >export function FormSubmitButton({ ...props }: ButtonProps) {</span>
+<span class="cstat-no" title="statement not covered" >  const { formState } = useFormContext();</span>
+<span class="cstat-no" title="statement not covered" >  return (</span>
+<span class="cstat-no" title="statement not covered" >    &lt;Button {...props} disabled={!formState.isDirty || !formState.isValid} /&gt;</span>
   );
 <span class="cstat-no" title="statement not covered" >}</span>
 &nbsp;</pre></td></tr></table></pre>
@@ -940,7 +970,7 @@ type RenderCtx&lt;T extends FieldValues&gt; = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-09-24T15:22:18.298Z
+                at 2025-09-24T17:51:50.379Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
