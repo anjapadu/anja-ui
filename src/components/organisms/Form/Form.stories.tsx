@@ -243,12 +243,12 @@ export const AccountSettings: Story = {
   render: (props) => {
     return (
       <div className="flex flex-col gap-y-2 bg-[#f1f7fa] p-6 w-[100vw] [--input-color-bg:#f1f7fa]">
-        <Form<AccountSettingsFormData>
+        <Form
           {...props}
           schema={accountSettingsSchema}
           // formGroup=""
           layout={accountSettingsLayout}
-          renderers={createDefaultRenderers<AccountSettingsFormData>({
+          renderers={createDefaultRenderers({
             input: { labelBehavior: "floating" },
           })}
         />
