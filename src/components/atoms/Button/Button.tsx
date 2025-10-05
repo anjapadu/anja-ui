@@ -2,6 +2,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import type { PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";
 import { forwardRef } from "react";
+import { useFormContext } from "react-hook-form";
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof buttonVariants> & {
@@ -50,5 +51,12 @@ export const Button = forwardRef<
     </button>
   );
 });
+
+export const FormButton = (props: PropsWithChildren<ButtonProps>) => {
+  const {
+    formState: { isDirty, isValid },
+  } = useFormContext();
+  return <Button {...props} disabled={!isValid || !isDirty} />;
+};
 
 Button.displayName = "Button";

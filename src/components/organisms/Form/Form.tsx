@@ -17,8 +17,15 @@ import {
   type Renderers,
 } from "./renderers";
 import type { PathOf } from "./paths";
-import { Fragment, memo, useEffect, useState } from "react";
+import {
+  Fragment,
+  memo,
+  useEffect,
+  useState,
+  type PropsWithChildren,
+} from "react";
 import { Button, type ButtonProps } from "../../atoms/Button";
+import { twMerge } from "tailwind-merge";
 
 type Section<T extends FieldValues> = {
   title?: string;
@@ -46,6 +53,7 @@ export type FormProps<TValues extends FieldValues> = {
   mode?: "onSubmit" | "onBlur" | "onChange" | "all";
   renderers?: Renderers<TValues>;
   showDebugFormValues?: boolean;
+  submitButtonContainerClassName?: string;
 };
 
 function resolverFor<TValues extends FieldValues>(
@@ -62,6 +70,7 @@ type RenderCtx<T extends FieldValues> = {
   layout: Layout<T>;
   methods: UseFormReturn<T>;
   renderers: Renderers<T>;
+  submitButtonContainerClassName?: string;
 };
 
 function Row({
@@ -231,15 +240,28 @@ function keyForBlock<T extends FieldValues>(blk: Block<T>, i: number): string {
   return `field-${f.name}-${i}`;
 }
 
-export function RenderLayout<T extends FieldValues>(props: RenderCtx<T>) {
-  const { layout } = props;
+export function RenderLayout<T extends FieldValues>(
+  props: PropsWithChildren<RenderCtx<T>>
+) {
+  const { layout, children, submitButtonContainerClassName } = props;
   return (
-    <div className="gap-y-6 flex flex-col">
+    <div className="gap-y-6 flex flex-col w-full ml">
       {layout.map((blk, i) => (
         <Fragment key={keyForBlock(blk, i)}>
           {renderBlock(blk, props, keyForBlock(blk, i))}
         </Fragment>
       ))}
+      <div className="flex flex-row flex-1">
+        <div className="w-1/3" />
+        <div
+          className={twMerge(
+            "w-7/12 flex justify-end",
+            submitButtonContainerClassName
+          )}
+        >
+          {children}
+        </div>
+      </div>
     </div>
   );
 }
@@ -270,7 +292,9 @@ export function Form<TValues extends FieldValues>({
   mode = "onBlur",
   showDebugFormValues,
   renderers,
-}: FormProps<TValues>) {
+  submitButtonContainerClassName,
+  children,
+}: PropsWithChildren<FormProps<TValues>>) {
   const methods = useForm<TValues, unknown, TValues>({
     resolver: resolverFor(schema),
     defaultValues,
@@ -284,6 +308,8 @@ export function Form<TValues extends FieldValues>({
         <RenderLayout
           layout={layout}
           methods={methods}
+          children={children}
+          submitButtonContainerClassName={submitButtonContainerClassName}
           renderers={effectiveRenderers}
         />
       </form>

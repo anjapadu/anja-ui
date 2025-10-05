@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Form, type Layout } from "./Form";
 import { z } from "zod";
 import { createDefaultRenderers } from "./renderers";
+import { FormButton } from "../../atoms/Button";
 
 const meta = {
   title: "Organisms/Form",
@@ -176,11 +177,11 @@ export const OnePageForm: Story = {
 };
 
 const accountSettingsSchema = z.object({
-  personalInformation: z.object({
-    email: z.email(),
-    country: z.string(),
-    prefferedLanguage: z.string(),
-  }),
+  // personalInformation: z.object({
+  //   email: z.email(),
+  //   country: z.string(),
+  //   prefferedLanguage: z.string(),
+  // }),
   profileDetails: z.object({
     firstName: z.string(),
     lastName: z.string(),
@@ -189,12 +190,12 @@ const accountSettingsSchema = z.object({
     biography: z.string().min(100).max(1000),
     termsAndConditions: z.boolean(),
   }),
-  notifications: z.object({
-    exclusiveProducts: z.boolean().default(false),
-    news: z.boolean().default(false),
-    dailyMessage: z.boolean().default(false),
-    weeklySummary: z.boolean().default(false),
-  }),
+  // notifications: z.object({
+  //   exclusiveProducts: z.boolean().default(false),
+  //   news: z.boolean().default(false),
+  //   dailyMessage: z.boolean().default(false),
+  //   weeklySummary: z.boolean().default(false),
+  // }),
 });
 export type AccountSettingsFormData = z.infer<typeof accountSettingsSchema>;
 
@@ -274,13 +275,20 @@ export const AccountSettings: Story = {
           {...props}
           schema={accountSettingsSchema}
           layout={accountSettingsLayout}
+          onSubmit={(data) => {
+            console.log({ data });
+          }}
           renderers={createDefaultRenderers({
             defaultDirection: "col",
             defaults: {
               input: { labelBehavior: "floating" },
             },
           })}
-        />
+        >
+          <FormButton variant="primary" className="self-end">
+            Registrarse
+          </FormButton>
+        </Form>
       </div>
     );
   },
