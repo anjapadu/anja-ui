@@ -156,7 +156,6 @@ export function createDefaultRenderers<T extends FieldValues>({
       />
     ),
     combobox: ({ field, methods, path, direction }) => {
-      console.log({ field });
       return (
         <FieldGroup
           name={path}

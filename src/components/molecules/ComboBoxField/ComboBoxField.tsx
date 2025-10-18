@@ -333,14 +333,63 @@ export type FormComboBoxFieldProps = Omit<
 export function FormComboboxField({
   name,
   controller,
-  ...props
+  inputProps,
+  items = [],
+  ...restProps
 }: FormComboBoxFieldProps) {
+  const optionMap = useMemo(() => {
+    const map = new Map<Option["value"], Option>();
+    for (const option of items) {
+      map.set(option.value, option);
+    }
+    return map;
+  }, [items]);
+
+  const isOption = (candidate: unknown): candidate is Option =>
+    Boolean(
+      candidate &&
+        typeof candidate === "object" &&
+        "value" in (candidate as Option) &&
+        "label" in (candidate as Option)
+    );
+
+  const toOption = (val: unknown): Option | null => {
+    if (isOption(val)) return val;
+    if (
+      typeof val === "string" ||
+      typeof val === "number" ||
+      typeof val === "bigint"
+    ) {
+      return optionMap.get(val as Option["value"]) ?? null;
+    }
+    return null;
+  };
+
+  const toPrimitive = (candidate: Option | null | undefined) =>
+    candidate == null ? "" : candidate.value;
+
   return (
     <Controller
       {...controller}
       name={name}
-      render={({ field }) => {
-        return <ComboboxField {...props} {...field} />;
+      render={({ field: { value, onChange, onBlur } }) => {
+        const selectedOption = toOption(value);
+
+        return (
+          <ComboboxField
+            {...restProps}
+            items={items}
+            value={selectedOption}
+            onChange={(option) => onChange(toPrimitive(option))}
+            inputProps={{
+              ...(inputProps ?? {}),
+              onBlur: (event) => {
+                inputProps?.onBlur?.(event);
+                onBlur();
+              },
+            }}
+          />
+        );
       }}
     />
   );

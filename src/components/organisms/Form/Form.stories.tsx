@@ -163,6 +163,7 @@ export const OnePageForm: Story = {
       <div className="flex flex-col gap-y-2">
         <Form<FormData>
           {...props}
+          showDebugFormValues
           schema={schema}
           layout={layout}
           renderers={createDefaultRenderers<FormData>({
