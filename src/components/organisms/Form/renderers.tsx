@@ -38,8 +38,8 @@ export type InputFieldRef<T extends FieldValues> = BaseFieldRef<T> & {
 export type ComboboxOption = { label: string; value: string };
 export type ComboboxFieldRef<T extends FieldValues> = BaseFieldRef<T> & {
   component: "combobox";
-  options: ComboboxOption[];
-  comboProps?: Omit<FormComboBoxFieldProps, "name" | "options">;
+  items: ComboboxOption[];
+  comboProps?: Omit<FormComboBoxFieldProps, "name">;
 };
 
 export type CheckBoxFieldRef<T extends FieldValues> = BaseFieldRef<T> & {
@@ -105,7 +105,7 @@ function getError<T extends FieldValues>(
 
 type RendererDefaults = {
   input?: Omit<FormTextFieldProps, "name">;
-  combobox?: Omit<FormComboBoxFieldProps, "name" | "options">;
+  combobox?: Omit<FormComboBoxFieldProps, "name" | "items">;
   checkbox?: Omit<FormCheckBoxFieldProps, "name">;
   multicheckbox?: Omit<FormMultiCheckboxFieldProps, "name" | "options">;
 };
@@ -134,8 +134,8 @@ export function createDefaultRenderers<T extends FieldValues>({
             id={path}
             label={field.label}
             error={getError(methods, path)}
-            {...field.inputProps}
             {...defaults?.input}
+            {...field.inputProps}
             labelBehavior={
               labelBehaviour ||
               defaults?.input?.labelBehavior ||
@@ -155,24 +155,29 @@ export function createDefaultRenderers<T extends FieldValues>({
         {...field.checkboxProps}
       />
     ),
-    combobox: ({ field, methods, path, direction }) => (
-      <FieldGroup
-        name={path}
-        label={field.label ?? ""}
-        direction={direction || defaultDirection}
-      >
-        <FormComboboxField
+    combobox: ({ field, methods, path, direction }) => {
+      console.log({ field });
+      return (
+        <FieldGroup
           name={path}
-          id={path}
-          label={field.label}
-          items={field.options || []}
-          error={getError(methods, path)}
-          labelBehaviour={direction === "floating" ? "floating" : "placeholder"}
-          {...defaults?.combobox}
-          {...field.comboProps}
-        />
-      </FieldGroup>
-    ),
+          label={field.label ?? ""}
+          direction={direction || defaultDirection}
+        >
+          <FormComboboxField
+            name={path}
+            id={path}
+            label={field.label}
+            items={field.items || []}
+            error={getError(methods, path)}
+            labelBehaviour={
+              direction === "floating" ? "floating" : "placeholder"
+            }
+            {...defaults?.combobox}
+            {...field.comboProps}
+          />
+        </FieldGroup>
+      );
+    },
     multicheckbox: ({ field, methods, path }) => {
       const f = field as MultiCheckboxFieldRef<T>;
       return (

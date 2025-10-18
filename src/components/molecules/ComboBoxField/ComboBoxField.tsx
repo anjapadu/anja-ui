@@ -154,7 +154,7 @@ export type MultiProps = {
 };
 
 export type ComboboxFieldProps = SingleProps & {
-  id: string;
+  id?: string;
   label?: string;
   items: Option[];
   value?: Option | null;

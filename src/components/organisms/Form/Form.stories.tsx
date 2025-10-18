@@ -84,7 +84,7 @@ const layout: Layout<FormData> = [
       name: "address.country",
       component: "combobox",
       label: "País",
-      options: [{ label: "Gustavo Yance", value: "gyance" }],
+      items: [{ label: "Gustavo Yance", value: "gyance" }],
     },
     { name: "address.state", component: "input", label: "Estado" },
     { name: "address.city", component: "input", label: "Ciudad" },
@@ -168,6 +168,7 @@ export const OnePageForm: Story = {
           renderers={createDefaultRenderers<FormData>({
             defaults: {
               input: { labelBehavior: "floating" },
+              combobox: { label: "floating" },
             },
           })}
         />
