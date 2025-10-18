@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/92</span>
+                <span class='fraction'>0/96</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/92</span>
+                <span class='fraction'>0/96</span>
             </div>
         
             
@@ -255,7 +255,12 @@
 <a name='L190'></a><a href='#L190'>190</a>
 <a name='L191'></a><a href='#L191'>191</a>
 <a name='L192'></a><a href='#L192'>192</a>
-<a name='L193'></a><a href='#L193'>193</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L193'></a><a href='#L193'>193</a>
+<a name='L194'></a><a href='#L194'>194</a>
+<a name='L195'></a><a href='#L195'>195</a>
+<a name='L196'></a><a href='#L196'>196</a>
+<a name='L197'></a><a href='#L197'>197</a>
+<a name='L198'></a><a href='#L198'>198</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -417,6 +422,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -426,10 +433,13 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -487,8 +497,8 @@ export type InputFieldRef&lt;T extends FieldValues&gt; = BaseFieldRef&lt;T&gt; &
 export type ComboboxOption = { label: string; value: string };
 export type ComboboxFieldRef&lt;T extends FieldValues&gt; = BaseFieldRef&lt;T&gt; &amp; {
   component: "combobox";
-  options: ComboboxOption[];
-  comboProps?: Omit&lt;FormComboBoxFieldProps, "name" | "options"&gt;;
+  items: ComboboxOption[];
+  comboProps?: Omit&lt;FormComboBoxFieldProps, "name"&gt;;
 };
 &nbsp;
 export type CheckBoxFieldRef&lt;T extends FieldValues&gt; = BaseFieldRef&lt;T&gt; &amp; {
@@ -554,7 +564,7 @@ export type Renderers&lt;T extends FieldValues&gt; = {
 &nbsp;
 type RendererDefaults = {
   input?: Omit&lt;FormTextFieldProps, "name"&gt;;
-  combobox?: Omit&lt;FormComboBoxFieldProps, "name" | "options"&gt;;
+  combobox?: Omit&lt;FormComboBoxFieldProps, "name" | "items"&gt;;
   checkbox?: Omit&lt;FormCheckBoxFieldProps, "name"&gt;;
   multicheckbox?: Omit&lt;FormMultiCheckboxFieldProps, "name" | "options"&gt;;
 };
@@ -583,8 +593,8 @@ type RendererDefaults = {
 <span class="cstat-no" title="statement not covered" >            id={path}</span>
 <span class="cstat-no" title="statement not covered" >            label={field.label}</span>
 <span class="cstat-no" title="statement not covered" >            error={getError(methods, path)}</span>
-<span class="cstat-no" title="statement not covered" >            {...field.inputProps}</span>
 <span class="cstat-no" title="statement not covered" >            {...defaults?.input}</span>
+<span class="cstat-no" title="statement not covered" >            {...field.inputProps}</span>
 <span class="cstat-no" title="statement not covered" >            labelBehavior={</span>
 <span class="cstat-no" title="statement not covered" >              labelBehaviour ||</span>
 <span class="cstat-no" title="statement not covered" >              defaults?.input?.labelBehavior ||</span>
@@ -604,24 +614,29 @@ type RendererDefaults = {
 <span class="cstat-no" title="statement not covered" >        {...field.checkboxProps}</span>
 <span class="cstat-no" title="statement not covered" >      /&gt;</span>
     ),
-<span class="cstat-no" title="statement not covered" >    combobox: ({ field, methods, path, direction }) =&gt; (</span>
-<span class="cstat-no" title="statement not covered" >      &lt;FieldGroup</span>
-<span class="cstat-no" title="statement not covered" >        name={path}</span>
-<span class="cstat-no" title="statement not covered" >        label={field.label ?? ""}</span>
-<span class="cstat-no" title="statement not covered" >        direction={direction || defaultDirection}</span>
-      &gt;
-<span class="cstat-no" title="statement not covered" >        &lt;FormComboboxField</span>
+<span class="cstat-no" title="statement not covered" >    combobox: ({ field, methods, path, direction }) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      console.log({ field });</span>
+<span class="cstat-no" title="statement not covered" >      return (</span>
+<span class="cstat-no" title="statement not covered" >        &lt;FieldGroup</span>
 <span class="cstat-no" title="statement not covered" >          name={path}</span>
-<span class="cstat-no" title="statement not covered" >          id={path}</span>
-<span class="cstat-no" title="statement not covered" >          label={field.label}</span>
-<span class="cstat-no" title="statement not covered" >          items={field.options || []}</span>
-<span class="cstat-no" title="statement not covered" >          error={getError(methods, path)}</span>
-<span class="cstat-no" title="statement not covered" >          labelBehaviour={direction === "floating" ? "floating" : "placeholder"}</span>
-<span class="cstat-no" title="statement not covered" >          {...defaults?.combobox}</span>
-<span class="cstat-no" title="statement not covered" >          {...field.comboProps}</span>
-<span class="cstat-no" title="statement not covered" >        /&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;/FieldGroup&gt;</span>
-    ),
+<span class="cstat-no" title="statement not covered" >          label={field.label ?? ""}</span>
+<span class="cstat-no" title="statement not covered" >          direction={direction || defaultDirection}</span>
+        &gt;
+<span class="cstat-no" title="statement not covered" >          &lt;FormComboboxField</span>
+<span class="cstat-no" title="statement not covered" >            name={path}</span>
+<span class="cstat-no" title="statement not covered" >            id={path}</span>
+<span class="cstat-no" title="statement not covered" >            label={field.label}</span>
+<span class="cstat-no" title="statement not covered" >            items={field.items || []}</span>
+<span class="cstat-no" title="statement not covered" >            error={getError(methods, path)}</span>
+<span class="cstat-no" title="statement not covered" >            labelBehaviour={</span>
+<span class="cstat-no" title="statement not covered" >              direction === "floating" ? "floating" : "placeholder"</span>
+            }
+<span class="cstat-no" title="statement not covered" >            {...defaults?.combobox}</span>
+<span class="cstat-no" title="statement not covered" >            {...field.comboProps}</span>
+<span class="cstat-no" title="statement not covered" >          /&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/FieldGroup&gt;</span>
+      );
+<span class="cstat-no" title="statement not covered" >    },</span>
 <span class="cstat-no" title="statement not covered" >    multicheckbox: ({ field, methods, path }) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >      const f = field as MultiCheckboxFieldRef&lt;T&gt;;</span>
 <span class="cstat-no" title="statement not covered" >      return (</span>
@@ -646,7 +661,7 @@ type RendererDefaults = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-05T13:30:00.688Z
+                at 2025-10-18T21:28:41.754Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
