@@ -246,9 +246,9 @@ const accountSettingsLayout: Layout<AccountSettingsFormData> = [
       ],
       {
         name: "profileDetails.biography",
-        component: "input",
+        component: "textarea",
         label: "Biography",
-        inputProps: {
+        textareaProps: {
           placeholder: "Agrega una biografía.",
           hint: "(No debe tener menos de 100 caracteres)",
         },

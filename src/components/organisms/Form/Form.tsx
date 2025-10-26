@@ -218,6 +218,16 @@ function renderBlock<T extends FieldValues>(
         );
       return <div key={key}>{r({ field, methods, path })}</div>;
     }
+    case "textarea": {
+      const r = renderers.textarea;
+      if (!r)
+        return (
+          <div key={key} className="text-red-600 text-sm">
+            No renderer for "textarea"
+          </div>
+        );
+      return <div key={key}>{r({ field, methods, path })}</div>;
+    }
     case "combobox": {
       const r = renderers.combobox;
       if (!r)
