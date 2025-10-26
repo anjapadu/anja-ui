@@ -10,23 +10,29 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   };
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center transition-colors relative overflow-hidden \
-  cursor-pointer disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-70 \
-  font-inter font-bold text-base leading-[18px]",
+  "inline-flex items-center justify-center transition-colors text-font-primary relative overflow-hidden \
+  cursor-pointer disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-70",
   {
     variants: {
       variant: {
-        primary: "bg-[#404B66] hover:bg-[#030E2D] text-white rounded-[6px]",
-        secondary:
-          "bg-transparent border-[1.5px] border-[#404B66] hover:bg-[#404B66]/10 text-[#404B66] rounded-[6px]",
+        unstyled: "",
+        default:
+          "bg-neutral-0 border enabled:active:bg-neutral-100 border-border text-font-primary",
+        primary: "bg-primary enabled:active:bg-primary-600 text-neutral-0",
+        success: "bg-success enabled:active:bg-success-400 text-neutral-0",
+        destructive: "bg-danger enabled:active:bg-danger-600 text-neutral-0",
+        info: "bg-info enabled:active:bg-info-600 text-neutral-0",
+        warning: "bg-warning enabled:active:bg-warning-600 text-neutral-0",
       },
       size: {
-        default: "h-10 px-[14px] py-[9px] gap-[10px]",
+        sm: "h-10 px-3 text-sm rounded-sm",
+        md: "h-12 px-4 text-base rounded-md",
+        lg: "h-14 px-6 text-lg rounded-lg",
       },
     },
     defaultVariants: {
-      variant: "primary",
-      size: "default",
+      variant: "default",
+      size: "md",
     },
   }
 );
