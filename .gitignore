@@ -27,3 +27,10 @@ dist-ssr
 storybook-static
 
 coverage
+
+.claude
+
+anja-ui-component-matrix.md
+anja-ui-design-system-guide.md
+anja-ui-exploration-summary.md
+DOCUMENTATION_INDEX.md

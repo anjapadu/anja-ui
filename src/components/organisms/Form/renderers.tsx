@@ -4,6 +4,10 @@ import {
   type FormTextFieldProps,
 } from "../../molecules/TextField";
 import {
+  FormTextAreaField,
+  type FormTextAreaFieldProps,
+} from "../../molecules/TextAreaField";
+import {
   FormComboboxField,
   type FormComboBoxFieldProps,
   type Option,
@@ -19,7 +23,7 @@ import {
 } from "../../molecules/MultiCheckBoxField";
 import { FieldGroup } from "../../molecules/FieldGroup";
 
-export type ComponentKind = "input" | "combobox" | "checkbox" | "multicheckbox";
+export type ComponentKind = "input" | "textarea" | "combobox" | "checkbox" | "multicheckbox";
 
 type BaseFieldRef<T extends FieldValues> = {
   name: PathOf<T>;
@@ -33,6 +37,11 @@ export type Direction = "col" | "floating" | "row" | null | undefined;
 export type InputFieldRef<T extends FieldValues> = BaseFieldRef<T> & {
   component: "input";
   inputProps?: Omit<FormTextFieldProps, "name">;
+};
+
+export type TextAreaFieldRef<T extends FieldValues> = BaseFieldRef<T> & {
+  component: "textarea";
+  textareaProps?: Omit<FormTextAreaFieldProps, "name">;
 };
 
 export type ComboboxOption = { label: string; value: string };
@@ -55,6 +64,7 @@ export type MultiCheckboxFieldRef<T extends FieldValues> = BaseFieldRef<T> & {
 
 export type FieldRef<T extends FieldValues> =
   | InputFieldRef<T>
+  | TextAreaFieldRef<T>
   | ComboboxFieldRef<T>
   | CheckBoxFieldRef<T>
   | MultiCheckboxFieldRef<T>;
@@ -71,6 +81,8 @@ export type FieldPropsFor<
   T extends FieldValues
 > = K extends "input"
   ? FieldPropsBase<T, InputFieldRef<T>>
+  : K extends "textarea"
+  ? FieldPropsBase<T, TextAreaFieldRef<T>>
   : K extends "combobox"
   ? FieldPropsBase<T, ComboboxFieldRef<T>>
   : K extends "checkbox"
@@ -81,6 +93,7 @@ export type FieldPropsFor<
 
 export type Renderers<T extends FieldValues> = {
   input?: (p: FieldPropsFor<"input", T>) => React.ReactNode;
+  textarea?: (p: FieldPropsFor<"textarea", T>) => React.ReactNode;
   combobox?: (p: FieldPropsFor<"combobox", T>) => React.ReactNode;
   checkbox?: (p: FieldPropsFor<"checkbox", T>) => React.ReactNode;
   multicheckbox?: (p: FieldPropsFor<"multicheckbox", T>) => React.ReactNode;
@@ -105,6 +118,7 @@ function getError<T extends FieldValues>(
 
 type RendererDefaults = {
   input?: Omit<FormTextFieldProps, "name">;
+  textarea?: Omit<FormTextAreaFieldProps, "name">;
   combobox?: Omit<FormComboBoxFieldProps, "name" | "items">;
   checkbox?: Omit<FormCheckBoxFieldProps, "name">;
   multicheckbox?: Omit<FormMultiCheckboxFieldProps, "name" | "options">;
@@ -140,6 +154,33 @@ export function createDefaultRenderers<T extends FieldValues>({
               labelBehaviour ||
               defaults?.input?.labelBehavior ||
               field.inputProps?.labelBehavior
+            }
+          />
+        </FieldGroup>
+      );
+    },
+    textarea: ({ field, methods, path, direction }) => {
+      const labelBehaviour =
+        direction || defaultDirection === "floating"
+          ? "floating"
+          : "placeholder";
+      return (
+        <FieldGroup
+          name={path}
+          label={field.label ?? ""}
+          direction={direction || defaultDirection}
+        >
+          <FormTextAreaField
+            name={path}
+            id={path}
+            label={field.label}
+            error={getError(methods, path)}
+            {...defaults?.textarea}
+            {...field.textareaProps}
+            labelBehavior={
+              labelBehaviour ||
+              defaults?.textarea?.labelBehavior ||
+              field.textareaProps?.labelBehavior
             }
           />
         </FieldGroup>
