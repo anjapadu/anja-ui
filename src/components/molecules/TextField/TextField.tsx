@@ -14,10 +14,10 @@ type TextFieldProps = Omit<InputProps, "className"> & {
   className?: string;
 } & VariantProps<typeof textFieldVariants>;
 
-const textFieldVariants = cva("", {
+const textFieldVariants = cva("relative", {
   variants: {
     labelBehavior: {
-      floating: "relative",
+      floating: "",
       placeholder: "",
     },
     inputSize: {

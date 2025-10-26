@@ -14,11 +14,11 @@ type TextAreaFieldProps = Omit<TextAreaProps, "className"> & {
   className?: string;
 } & VariantProps<typeof textAreaFieldVariants>;
 
-const textAreaFieldVariants = cva("", {
+const textAreaFieldVariants = cva("relative", {
   variants: {
     labelBehavior: {
-      floating: "relative",
-      placeholder: "",
+      floating: null,
+      placeholder: null,
     },
     textAreaSize: {
       sm: null,
@@ -117,9 +117,21 @@ const labelVariants = cva("", {
   defaultVariants: { textAreaSize: "sm" },
 });
 
-export const TextAreaField = forwardRef<HTMLTextAreaElement, TextAreaFieldProps>(
+export const TextAreaField = forwardRef<
+  HTMLTextAreaElement,
+  TextAreaFieldProps
+>(
   (
-    { textAreaSize, labelBehavior, label, id, error, hint, className, ...props },
+    {
+      textAreaSize,
+      labelBehavior,
+      label,
+      id,
+      error,
+      hint,
+      className,
+      ...props
+    },
     ref
   ) => {
     const isFloating = (labelBehavior ?? "floating") === "floating";
