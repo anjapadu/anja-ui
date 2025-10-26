@@ -32,6 +32,7 @@ type Section<T extends FieldValues> = {
   type: "section";
   description?: string;
   blocks: Block<T>[];
+  layout?: "sidebar" | "inline"; // sidebar: título/descripción a la izquierda, inline: dentro del card
 };
 
 export type Block<T extends FieldValues> =
@@ -162,6 +163,39 @@ function renderBlock<T extends FieldValues>(
   }
 
   if ("type" in blk && blk.type === "section") {
+    const layout = blk.layout ?? "sidebar"; // default a sidebar para mantener compatibilidad
+
+    if (layout === "inline") {
+      // Layout inline: título y descripción dentro del card
+      return (
+        <div className="flex flex-row flex-1" key={key}>
+          <div className="w-1/3" />
+          <div className="flex flex-col gap-y-6 shadow pb-10 px-8 pt-10 bg-white dark:bg-black/20 rounded-xs w-7/12">
+            {(blk.title || blk.description) && (
+              <div className="mb-4">
+                {!!blk.title && (
+                  <Typography variant="body" className="font-semibold mb-2">
+                    {blk.title}
+                  </Typography>
+                )}
+                {!!blk.description && (
+                  <Typography variant="body" className="leading-none text-xs text-gray-600 dark:text-gray-400">
+                    {blk.description}
+                  </Typography>
+                )}
+              </div>
+            )}
+            {blk.blocks.map((b, j) => (
+              <Fragment key={`${key}-s${j}`}>
+                {renderBlock(b, ctx, `${key}-s${j}`)}
+              </Fragment>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // Layout sidebar: título y descripción a la izquierda (comportamiento original)
     return (
       <div className="flex flex-row flex-1" key={key}>
         <MemoizedDescription title={blk.title} description={blk.description} />

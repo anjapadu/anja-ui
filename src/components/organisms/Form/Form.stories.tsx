@@ -207,6 +207,7 @@ const accountSettingsLayout: Layout<AccountSettingsFormData> = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget eros nibh. Fusce faucibus lacus quis sem egestas, fringilla eleifend massa lacinia. Sed a ante tortor",
     title: "Profile Details",
+    layout: "inline", // Título y descripción dentro del card
     blocks: [
       [
         {
@@ -248,7 +249,7 @@ const accountSettingsLayout: Layout<AccountSettingsFormData> = [
         name: "profileDetails.biography",
         component: "textarea",
         label: "Biography",
-        textareaProps: {
+        tex: {
           placeholder: "Agrega una biografía.",
           hint: "(No debe tener menos de 100 caracteres)",
         },
@@ -277,6 +278,103 @@ export const AccountSettings: Story = {
           {...props}
           schema={accountSettingsSchema}
           layout={accountSettingsLayout}
+          onSubmit={(data) => {
+            console.log({ data });
+          }}
+          renderers={createDefaultRenderers({
+            defaultDirection: "col",
+            defaults: {
+              input: { labelBehavior: "floating" },
+            },
+          })}
+        >
+          <FormButton variant="primary" className="self-end">
+            Registrarse
+          </FormButton>
+        </Form>
+      </div>
+    );
+  },
+};
+
+// Layout sidebar - comportamiento tradicional con título/descripción a la izquierda
+const accountSettingsSidebarLayout: Layout<AccountSettingsFormData> = [
+  {
+    type: "section",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget eros nibh. Fusce faucibus lacus quis sem egestas, fringilla eleifend massa lacinia. Sed a ante tortor",
+    title: "Profile Details",
+    layout: "sidebar", // Título y descripción a la izquierda (default)
+    blocks: [
+      [
+        {
+          name: "profileDetails.firstName",
+          component: "input",
+          label: "First name",
+          inputProps: {
+            placeholder: "Ingresa tu nombre",
+          },
+        },
+        {
+          name: "profileDetails.lastName",
+          component: "input",
+          label: "Last name",
+          inputProps: {
+            placeholder: "Ingresa tu apellido",
+          },
+        },
+      ],
+      [
+        {
+          name: "profileDetails.username",
+          component: "input",
+          label: "Username",
+          inputProps: {
+            placeholder: "Ingresa tu usuario",
+          },
+        },
+        {
+          name: "profileDetails.mobilePhone",
+          component: "input",
+          label: "Phone number",
+          inputProps: {
+            placeholder: "Ingresa tu teléfono",
+          },
+        },
+      ],
+      {
+        name: "profileDetails.biography",
+        component: "textarea",
+        label: "Biography",
+        tex: {
+          placeholder: "Agrega una biografía.",
+          hint: "(No debe tener menos de 100 caracteres)",
+        },
+      },
+      {
+        component: "checkbox",
+        name: "profileDetails.termsAndConditions",
+        containerClassName: "mt-4",
+        checkboxProps: {
+          label: "Acepto los términos y condiciones",
+        },
+      },
+    ],
+  },
+];
+
+export const AccountSettingsSidebar: Story = {
+  args: {
+    schema,
+    layout,
+  },
+  render: (props) => {
+    return (
+      <div className="flex flex-col gap-y-2 bg-[#f1f7fa] p-6 w-[100vw] [--input-color-bg:#f1f7fa] dark:[--input-color-bg:var(--color-neutral-50)] dark:bg-blue-950">
+        <Form
+          {...props}
+          schema={accountSettingsSchema}
+          layout={accountSettingsSidebarLayout}
           onSubmit={(data) => {
             console.log({ data });
           }}
